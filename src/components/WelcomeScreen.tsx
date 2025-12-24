@@ -145,12 +145,26 @@ const WelcomeScreen = ({ onComplete }: WelcomeScreenProps) => {
                                 className="text-xl md:text-3xl font-display font-medium tracking-[0.6em] text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.3)] mb-4"
                             />
 
-                            {/* Static PORTFOLIO text */}
-                            <CharacterReveal
-                                text="PORTFOLIO"
-                                delay={8}
-                                className="text-5xl md:text-8xl font-display font-black tracking-tight uppercase bg-gradient-to-r from-cyan-400 via-white to-purple-500 bg-clip-text text-transparent p-4 drop-shadow-[0_0_20px_rgba(34,211,238,0.3)]"
-                            />
+                            {/* Looping Typewriter for PORTFOLIO */}
+                            <motion.div
+                                animate={{
+                                    y: [0, -8, 0],
+                                }}
+                                transition={{
+                                    duration: 4,
+                                    repeat: Infinity,
+                                    ease: "easeInOut"
+                                }}
+                                className="text-5xl md:text-8xl font-display font-black tracking-tight uppercase bg-gradient-to-r from-cyan-400 via-white to-purple-500 bg-clip-text text-transparent p-4 min-h-[160px] flex items-center justify-center"
+                            >
+                                <TextType
+                                    text={["PORTFOLIO"]}
+                                    typingSpeed={100}
+                                    pauseDuration={2000}
+                                    showCursor={true}
+                                    cursorCharacter="|"
+                                />
+                            </motion.div>
                         </div>
 
                         {/* Enter Icon Button */}
