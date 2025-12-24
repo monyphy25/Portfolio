@@ -1,12 +1,12 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import ProjectCard from "./ProjectCard";
-
+import mony1 from "../assets/mony1.png";
 const projects = [
   {
     title: "Savory Bites",
     description: "A modern food delivery platform with real-time order tracking, curated restaurant listings, and seamless checkout experience. Built with focus on user experience and visual appeal.",
-    image: "https://via.placeholder.com/400x300/FF6B35/FFFFFF?text=Savory+Bites",
+    image: mony1,
     tags: ["React", "Node.js", "MongoDB", "Stripe"],
     liveUrl: "#",
     githubUrl: "#",
@@ -39,7 +39,7 @@ const Projects = () => {
         <motion.div ref={ref} initial={{ opacity: 0, y: 50 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8 }} className="text-center mb-12 sm:mb-16">
           <p className="text-primary font-medium tracking-widest uppercase mb-4 text-sm">Portfolio</p>
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-6">
-            Featured <span className="text-gradient-primary">Projects</span>
+            My <span className="text-gradient-primary">Projects</span>
           </h2>
           <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto">
             A selection of projects that showcase my skills and passion for creating exceptional digital experiences.

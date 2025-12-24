@@ -10,6 +10,9 @@ const skills = [
     { name: "C++", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg", color: "shadow-blue-600/50" },
     { name: "Bootstrap", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg", color: "shadow-purple-500/50" },
     { name: "Tailwind", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg", color: "shadow-cyan-400/50" },
+    { name: "jQuery", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jquery/jquery-original.svg", color: "shadow-blue-700/50" },
+    { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", color: "shadow-green-500/50" },
+    { name: "Vue.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg", color: "shadow-emerald-500/50" },
 ];
 
 const Skills = () => {
@@ -22,41 +25,112 @@ const Skills = () => {
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
-                    <h2 className="font-display text-4xl sm:text-5xl font-bold mb-4">
-                        My <span className="text-gradient-accent">Skills</span>
-                    </h2>
-                    <p className="text-white/60 text-lg">The technologies I use to bring ideas to life.</p>
+                    <motion.h2
+                        className="font-display text-4xl sm:text-5xl font-bold mb-4 text-foreground"
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                    >
+                        {Array.from("My ").map((char, index) => (
+                            <motion.span
+                                key={`my-${index}`}
+                                variants={{
+                                    hidden: { opacity: 0, y: 10 },
+                                    visible: {
+                                        opacity: 1,
+                                        y: 0,
+                                        transition: { delay: index * 0.05 }
+                                    }
+                                }}
+                                className="inline-block mr-[0.02em]"
+                            >
+                                {char === " " ? "\u00A0" : char}
+                            </motion.span>
+                        ))}
+                        {Array.from("Skills").map((char, index) => (
+                            <motion.span
+                                key={`skills-${index}`}
+                                variants={{
+                                    hidden: { opacity: 0, y: 12, filter: "blur(4px)" },
+                                    visible: {
+                                        opacity: 1,
+                                        y: 0,
+                                        filter: "blur(0px)",
+                                        transition: { delay: 0.15 + index * 0.06 }
+                                    }
+                                }}
+                                className="inline-block mr-[0.02em] text-gradient-accent"
+                            >
+                                {char}
+                            </motion.span>
+                        ))}
+                    </motion.h2>
+                    <motion.p
+                        className="text-muted-foreground text-lg"
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.5 }}
+                    >
+                        The technologies I use to bring ideas to life.
+                    </motion.p>
                 </motion.div>
 
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-4">
                     {skills.map((skill, index) => (
                         <motion.div
                             key={skill.name}
                             initial={{ opacity: 0, scale: 0.8 }}
                             whileInView={{ opacity: 1, scale: 1 }}
-                            whileHover={{ scale: 1.05, y: -5 }}
                             viewport={{ once: true }}
-                            transition={{ delay: index * 0.05, type: "spring", stiffness: 300 }}
-                            className={`bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col items-center gap-4 hover:bg-white/10 transition-all cursor-pointer group hover:shadow-[0_0_30px_rgba(0,0,0,0.3)] ${skill.color} hover:shadow-lg`}
+                            transition={{
+                                type: "spring",
+                                stiffness: 260,
+                                damping: 20,
+                                delay: index * 0.05
+                            }}
+                            className="group relative"
                         >
-                            <div className="w-16 h-16 relative">
-                                <div className="absolute inset-0 bg-white/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                                <motion.img
-                                    src={skill.icon}
-                                    alt={skill.name}
-                                    animate={{ y: [0, -10, 0] }}
+                            <div className="relative h-32 w-full bg-white/[0.05] backdrop-blur-md border border-white/10 rounded-2xl p-4 flex flex-col items-center justify-center gap-3 overflow-hidden transition-all duration-300 hover:bg-white/[0.1] hover:border-white/30 shadow-xl">
+
+                                {/* Continuous Laser Sweep - Periodic */}
+                                <motion.div
+                                    className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12"
+                                    animate={{ translateX: ["-100%", "200%"] }}
                                     transition={{
                                         duration: 3,
                                         repeat: Infinity,
+                                        repeatDelay: 2 + Math.random() * 5,
                                         ease: "easeInOut",
-                                        delay: index * 0.2 // Stagger the float animation
+                                        delay: index * 0.2
                                     }}
-                                    className="w-full h-full object-contain relative z-10 drop-shadow-lg"
                                 />
+
+                                <div className={`absolute inset-0 opacity-10 group-hover:opacity-30 blur-2xl transition-opacity duration-300 ${skill.color.replace('shadow', 'bg')}`} />
+
+                                {/* Floating Icon - Continuous */}
+                                <motion.div
+                                    className="relative z-10 w-12 h-12 flex items-center justify-center"
+                                    animate={{
+                                        y: [0, -4, 0],
+                                        scale: [1, 1.05, 1]
+                                    }}
+                                    transition={{
+                                        duration: 4,
+                                        repeat: Infinity,
+                                        ease: "easeInOut",
+                                        delay: index * 0.1
+                                    }}
+                                    whileHover={{ scale: 1.4, y: -8 }}
+                                >
+                                    <img src={skill.icon} alt={skill.name} className="w-full h-full object-contain filter drop-shadow(0 0 8px rgba(255,255,255,0.2)) group-hover:drop-shadow(0 0 15px rgba(255,255,255,0.5))" />
+                                </motion.div>
+
+                                <span className="relative z-10 font-display font-semibold text-[10px] tracking-widest uppercase text-white/40 group-hover:text-white transition-colors duration-300">{skill.name}</span>
+
+                                {/* Status LED - Always Active */}
+                                <div className={`absolute top-2 right-2 w-1 h-1 rounded-full ${skill.color.replace('shadow', 'bg')} animate-pulse`} />
                             </div>
-                            <span className="font-medium text-white/80 group-hover:text-white transition-colors">
-                                {skill.name}
-                            </span>
                         </motion.div>
                     ))}
                 </div>
