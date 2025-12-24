@@ -145,13 +145,11 @@ const WelcomeScreen = ({ onComplete }: WelcomeScreenProps) => {
                                 className="text-xl md:text-3xl font-display font-medium tracking-[0.6em] text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.3)] mb-4"
                             />
 
-                            {/* High-Impact Character Reveal for PORTFOLIO */}
+                            {/* Static PORTFOLIO text */}
                             <div className="relative">
-                                <CharacterReveal
-                                    text="PORTFOLIO"
-                                    delay={8}
-                                    className="text-5xl md:text-8xl font-display font-black tracking-tight uppercase bg-gradient-to-r from-cyan-400 via-white to-purple-500 bg-clip-text text-transparent p-4 drop-shadow-[0_0_20px_rgba(34,211,238,0.3)]"
-                                />
+                                <h1 className="text-5xl md:text-8xl font-display font-black tracking-tight uppercase bg-gradient-to-r from-cyan-400 via-white to-purple-500 bg-clip-text text-transparent p-4 drop-shadow-[0_0_20px_rgba(34,211,238,0.3)]">
+                                    PORTFOLIO
+                                </h1>
                             </div>
                         </div>
 
