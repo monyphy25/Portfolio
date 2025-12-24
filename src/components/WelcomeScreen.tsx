@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import TextType from "./TextType";
 
 interface WelcomeScreenProps {
     onComplete: () => void;
@@ -144,26 +145,24 @@ const WelcomeScreen = ({ onComplete }: WelcomeScreenProps) => {
                                 className="text-xl md:text-3xl font-display font-medium tracking-[0.6em] text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.3)] mb-4"
                             />
 
-                            {/* Infinite Animation Wrapper for PORTFOLIO */}
+                            {/* Text Type Animation for PORTFOLIO and more */}
                             <motion.div
                                 animate={{
-                                    y: [0, -10, 0],
-                                    filter: [
-                                        "drop-shadow(0 0 10px rgba(34,211,238,0.2))",
-                                        "drop-shadow(0 0 25px rgba(168,85,247,0.4))",
-                                        "drop-shadow(0 0 10px rgba(34,211,238,0.2))"
-                                    ]
+                                    y: [0, -5, 0],
                                 }}
                                 transition={{
                                     duration: 4,
                                     repeat: Infinity,
                                     ease: "easeInOut"
                                 }}
+                                className="text-3xl md:text-6xl font-display font-black tracking-tight uppercase bg-gradient-to-r from-cyan-400 via-white to-purple-500 bg-clip-text text-transparent p-4 min-h-[120px] flex items-center justify-center"
                             >
-                                <CharacterReveal
-                                    text="PORTFOLIO"
-                                    delay={8}
-                                    className="text-5xl md:text-8xl font-display font-black tracking-tight uppercase bg-gradient-to-r from-cyan-400 via-white to-purple-500 bg-clip-text text-transparent p-4"
+                                <TextType
+                                    text={["Text typing effect", "for your websites", "Happy coding!"]}
+                                    typingSpeed={75}
+                                    pauseDuration={1500}
+                                    showCursor={true}
+                                    cursorCharacter="|"
                                 />
                             </motion.div>
                         </div>
