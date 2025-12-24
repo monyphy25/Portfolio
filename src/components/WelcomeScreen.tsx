@@ -146,27 +146,13 @@ const WelcomeScreen = ({ onComplete }: WelcomeScreenProps) => {
                             />
 
                             {/* High-Impact Character Reveal for PORTFOLIO */}
-                            <motion.div
-                                animate={{
-                                    y: [0, -10, 0],
-                                    filter: [
-                                        "drop-shadow(0 0 10px rgba(34,211,238,0.2))",
-                                        "drop-shadow(0 0 25px rgba(168,85,247,0.4))",
-                                        "drop-shadow(0 0 10px rgba(34,211,238,0.2))"
-                                    ]
-                                }}
-                                transition={{
-                                    duration: 4,
-                                    repeat: Infinity,
-                                    ease: "easeInOut"
-                                }}
-                            >
+                            <div className="relative">
                                 <CharacterReveal
                                     text="PORTFOLIO"
                                     delay={8}
-                                    className="text-5xl md:text-8xl font-display font-black tracking-tight uppercase bg-gradient-to-r from-cyan-400 via-white to-purple-500 bg-clip-text text-transparent p-4"
+                                    className="text-5xl md:text-8xl font-display font-black tracking-tight uppercase bg-gradient-to-r from-cyan-400 via-white to-purple-500 bg-clip-text text-transparent p-4 drop-shadow-[0_0_20px_rgba(34,211,238,0.3)]"
                                 />
-                            </motion.div>
+                            </div>
                         </div>
 
                         {/* Enter Icon Button */}
