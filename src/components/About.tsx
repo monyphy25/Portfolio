@@ -23,81 +23,40 @@ const About = () => {
         {/* Image Side - Styled like Hero Image */}
         <motion.div
           variants={{
-            hidden: { opacity: 0, scale: 0.8, filter: "blur(10px)", x: -50 },
+            hidden: { opacity: 0, scale: 0.9 },
             visible: {
               opacity: 1,
               scale: 1,
-              filter: "blur(0px)",
-              x: 0,
-              transition: { type: "spring", stiffness: 50, damping: 20 }
+              transition: { duration: 0.8 }
             }
           }}
-          className="relative flex justify-center perspective-1000"
+          className="relative flex justify-center"
         >
-          {/* Using a more premium 3D floating animation with GPU acceleration */}
+          {/* Extremely lightweight float for performance */}
           <motion.div
             className="relative w-[300px] h-[300px] lg:w-[400px] lg:h-[400px] transform-gpu"
             animate={{
-              y: [0, -15, 0],
-              rotateX: [0, 4, 0],
-              rotateY: [0, -4, 0],
+              y: [0, -10, 0],
             }}
             transition={{
-              duration: 10, // Slower is often smoother
+              duration: 5,
               repeat: Infinity,
               ease: "easeInOut",
             }}
           >
-            {/* Animated Cyber Frame - Simplified for performance */}
-            <motion.div
-              className="absolute -inset-6 rounded-3xl border border-cyan-500/20 z-0"
-              animate={{
-                rotate: [0, 360],
-              }}
-              transition={{
-                duration: 25,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-            />
-            <motion.div
-              className="absolute -inset-3 rounded-3xl border border-purple-500/20 z-0"
-              animate={{
-                rotate: [360, 0],
-              }}
-              transition={{
-                duration: 20,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-            />
+            {/* Simple Cyan Border */}
+            <div className="absolute inset-0 rounded-2xl border-2 border-[#22d3ee]/50 z-20 shadow-[0_0_20px_rgba(34,211,238,0.2)]" />
 
-            {/* Main Image Container */}
-            <div className="absolute inset-0 rounded-2xl border-2 border-[#22d3ee]/50 z-20 shadow-[0_0_30px_rgba(34,211,238,0.2)] overflow-hidden">
-              <div className="absolute inset-0 z-10 bg-black">
-                <img
-                  src={aboutImg}
-                  alt="Mony Profile"
-                  className="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500"
-                />
-              </div>
-
-              {/* Scanline Effect - Optimized */}
-              <motion.div
-                className="absolute top-0 left-0 w-full h-[1px] bg-cyan-400/30 z-30"
-                animate={{ top: ["0%", "100%"] }}
-                transition={{
-                  duration: 6,
-                  repeat: Infinity,
-                  ease: "linear"
-                }}
+            <div className="absolute inset-0 rounded-2xl overflow-hidden z-10 bg-black">
+              <img
+                src={aboutImg}
+                alt="Mony Profile"
+                className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 via-transparent to-purple-500/10 pointer-events-none z-20" />
             </div>
 
-            {/* Ambient Glowing Backgrounds - Optimized blur for performance */}
-            <div className="absolute -inset-8 bg-cyan-500/20 blur-[80px] -z-10 animate-pulse" />
-            <div className="absolute inset-0 bg-purple-500/10 blur-[100px] -z-20" />
+            {/* Subtle Static Glow */}
+            <div className="absolute -inset-4 bg-cyan-500/10 blur-[60px] -z-10" />
           </motion.div>
         </motion.div>
 
