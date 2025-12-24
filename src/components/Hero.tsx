@@ -49,19 +49,45 @@ const Hero = () => {
           <motion.h1
             className="text-6xl md:text-8xl font-bold mb-6 leading-tight transition-colors"
             style={{ color: 'var(--color-foreground)' }}
+            variants={{
+              visible: {
+                transition: {
+                  staggerChildren: 0.1,
+                }
+              }
+            }}
+            initial="hidden"
+            animate="visible"
           >
-            <span className="block pb-2 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-              Web
+            <span className="block pb-2">
+              {"Web".split("").map((char, index) => (
+                <motion.span
+                  key={index}
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0 }
+                  }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
+                  className="inline-block bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent"
+                >
+                  {char}
+                </motion.span>
+              ))}
             </span>
-            <span className="flex items-center">
-              <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
-                <TypewriterText text="Developer" />
-              </span>
-              <motion.span
-                animate={{ opacity: [1, 0, 1] }}
-                transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
-                className="inline-block w-[4px] h-[0.8em] bg-purple-500 ml-2 shadow-[0_0_10px_rgba(168,85,247,0.8)]"
-              />
+            <span className="block">
+              {"Developer".split("").map((char, index) => (
+                <motion.span
+                  key={index}
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0 }
+                  }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
+                  className="inline-block bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent"
+                >
+                  {char}
+                </motion.span>
+              ))}
             </span>
           </motion.h1>
 
