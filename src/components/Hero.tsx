@@ -1,5 +1,36 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Github, Linkedin, Twitter } from "lucide-react";
+
+const TypewriterText = ({ text }: { text: string }) => {
+  const [displayedText, setDisplayedText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [speed, setSpeed] = useState(150);
+
+  useEffect(() => {
+    const handleTyping = () => {
+      if (!isDeleting && displayedText === text) {
+        setSpeed(2000); // Pause at end of word
+        setIsDeleting(true);
+      } else if (isDeleting && displayedText === "") {
+        setIsDeleting(false);
+        setSpeed(500); // Small pause before starting next loop
+      } else {
+        setDisplayedText(prev =>
+          isDeleting
+            ? text.substring(0, prev.length - 1)
+            : text.substring(0, prev.length + 1)
+        );
+        setSpeed(isDeleting ? 75 : 150);
+      }
+    };
+
+    const timer = setTimeout(handleTyping, speed);
+    return () => clearTimeout(timer);
+  }, [displayedText, isDeleting, speed, text]);
+
+  return <span>{displayedText}</span>;
+};
 
 
 const Hero = () => {
@@ -19,11 +50,18 @@ const Hero = () => {
             className="text-6xl md:text-8xl font-bold mb-6 leading-tight transition-colors"
             style={{ color: 'var(--color-foreground)' }}
           >
-            <span className="block bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+            <span className="block pb-2 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
               Web
             </span>
-            <span className="block bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
-              Developer
+            <span className="flex items-center">
+              <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
+                <TypewriterText text="Developer" />
+              </span>
+              <motion.span
+                animate={{ opacity: [1, 0, 1] }}
+                transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+                className="inline-block w-[4px] h-[0.8em] bg-purple-500 ml-2 shadow-[0_0_10px_rgba(168,85,247,0.8)]"
+              />
             </span>
           </motion.h1>
 
