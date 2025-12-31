@@ -47,9 +47,12 @@ const Hero = () => {
         >
 
           <motion.h1
-            className="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 leading-tight transition-colors"
+            className="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 leading-[1.1] transition-colors"
             style={{ color: 'var(--color-foreground)' }}
           >
+            <span className="block text-sm sm:text-base md:text-lg font-bold tracking-[0.2em] text-cyan-400/80 mb-2 sm:mb-4 uppercase">
+              I AM A
+            </span>
             <span className="block pb-2 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
               Web
             </span>
