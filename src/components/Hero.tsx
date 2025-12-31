@@ -46,27 +46,39 @@ const Hero = () => {
           className="relative z-10"
         >
 
-          {/* Minimalist Premium Prefix */}
+          {/* Futuristic Cyber-HUD Prefix */}
           <motion.div
-            className="flex items-center gap-4 mb-4"
+            className="inline-flex items-center gap-4 mb-8 relative"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.6 }}
           >
-            <span className="text-xs sm:text-sm font-medium tracking-[0.5em] text-cyan-400/70 uppercase">
-              <motion.span
-                initial={{ filter: "blur(10px)", opacity: 0 }}
-                animate={{ filter: "blur(0px)", opacity: 1 }}
-                transition={{ duration: 1, delay: 0.2 }}
-              >
-                I'm a
-              </motion.span>
-            </span>
+            {/* Viewfinder Corner Accents */}
+            <div className="absolute -top-1.5 -left-1.5 w-2 h-2 border-t-2 border-l-2 border-cyan-400/40" />
+            <div className="absolute -bottom-1.5 -right-1.5 w-2 h-2 border-b-2 border-r-2 border-cyan-400/40" />
+
+            <div className="px-4 py-2 bg-cyan-400/10 border border-cyan-400/20 backdrop-blur-xl rounded-sm flex items-center gap-3 shadow-[0_0_20px_rgba(34,211,238,0.1)] relative overflow-hidden group">
+              {/* Animated Scanline Overlay */}
+              <motion.div
+                animate={{ x: ["-100%", "200%"] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-y-0 w-1/2 bg-gradient-to-r from-transparent via-cyan-400/10 to-transparent skew-x-12"
+              />
+
+              <div className="relative flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_10px_rgba(34,211,238,1)]" />
+                <span className="text-[10px] sm:text-xs font-bold tracking-[0.4em] text-cyan-400 uppercase">
+                  Hi I am
+                </span>
+              </div>
+            </div>
+
+            {/* Futuristic Data-Link Line */}
             <motion.div
-              initial={{ width: 0, opacity: 0 }}
-              animate={{ width: "100px", opacity: 0.3 }}
-              transition={{ delay: 0.5, duration: 1.2, ease: "easeInOut" }}
-              className="h-[1px] bg-gradient-to-r from-cyan-400 to-transparent hidden sm:block"
+              initial={{ width: 0 }}
+              animate={{ width: "40px" }}
+              transition={{ delay: 0.5, duration: 0.8 }}
+              className="h-[1px] bg-gradient-to-r from-cyan-400/50 to-transparent hidden sm:block"
             />
           </motion.div>
 
