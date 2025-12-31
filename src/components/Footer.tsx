@@ -9,10 +9,10 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-[#030014] pt-20 pb-10 px-4 sm:px-6 lg:px-8 border-t border-white/5 overflow-hidden">
+    <footer className="relative bg-background pt-20 pb-10 px-4 sm:px-6 lg:px-8 border-t border-border overflow-hidden transition-colors duration-500">
       {/* Background Glow Decorations */}
-      <div className="absolute top-0 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-accent/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-0 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-[100px] pointer-events-none opacity-50 dark:opacity-100" />
+      <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-accent/5 rounded-full blur-[100px] pointer-events-none opacity-50 dark:opacity-100" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
@@ -42,7 +42,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   whileHover={{ y: -5, scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
-                  className="w-10 h-10 flex items-center justify-center rounded-xl bg-secondary/50 border border-white/10 hover:border-primary/50 hover:bg-primary/10 transition-colors group"
+                  className="w-10 h-10 flex items-center justify-center rounded-xl bg-secondary/50 border border-border hover:border-primary/50 hover:bg-primary/10 transition-colors group"
                   aria-label={social.label}
                 >
                   <social.icon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
@@ -114,7 +114,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-muted-foreground text-sm text-center md:text-left">
             © {currentYear} <span className="text-primary font-semibold">Portfolio</span>. All rights reserved.
           </p>
@@ -122,7 +122,7 @@ const Footer = () => {
           <div className="flex items-center gap-6">
             <button
               onClick={scrollToTop}
-              className="p-3 bg-secondary/30 hover:bg-primary/20 border border-white/5 hover:border-primary/30 rounded-full transition-all group"
+              className="p-3 bg-secondary/30 hover:bg-primary/20 border border-border hover:border-primary/30 rounded-full transition-all group"
               aria-label="Scroll to top"
             >
               <ChevronUp className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:-translate-y-1 transition-all" />

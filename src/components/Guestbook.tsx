@@ -94,14 +94,28 @@ const Guestbook = () => {
                     </motion.div>
 
                     <motion.h2
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        className="font-display text-4xl sm:text-5xl font-bold mb-6 text-foreground"
+                        initial="hidden"
+                        whileInView="visible"
                         viewport={{ once: true }}
-                        className="font-display text-4xl sm:text-5xl font-bold mb-6"
                     >
-                        <span className="text-gradient-primary inline-block animate-title-glow">
-                            Comment
-                        </span>
+                        {Array.from("Comment").map((char, index) => (
+                            <motion.span
+                                key={`comment-${index}`}
+                                variants={{
+                                    hidden: { opacity: 0, y: 12, filter: "blur(4px)" },
+                                    visible: {
+                                        opacity: 1,
+                                        y: 0,
+                                        filter: "blur(0px)",
+                                        transition: { delay: index * 0.06 }
+                                    }
+                                }}
+                                className="inline-block mr-[0.02em] text-gradient-primary"
+                            >
+                                {char}
+                            </motion.span>
+                        ))}
                     </motion.h2>
                     <p className="text-white/60 max-w-lg mx-auto">
                         Drop a comment, feedback, or just say hello! Your message will appear below instanty.

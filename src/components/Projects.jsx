@@ -38,9 +38,46 @@ const Projects = () => {
       <div className="max-w-6xl mx-auto">
         <motion.div ref={ref} initial={{ opacity: 0, y: 50 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8 }} className="text-center mb-12 sm:mb-16">
           <p className="text-primary font-medium tracking-widest uppercase mb-4 text-sm">Portfolio</p>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-6">
-            <span className="text-gradient-primary">Projects</span>
-          </h2>
+          <motion.h2
+            className="font-display text-4xl sm:text-5xl font-bold mb-6 text-foreground"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            {Array.from("My ").map((char, index) => (
+              <motion.span
+                key={`my-${index}`}
+                variants={{
+                  hidden: { opacity: 0, y: 10 },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    transition: { delay: index * 0.05 }
+                  }
+                }}
+                className="inline-block mr-[0.02em]"
+              >
+                {char === " " ? "\u00A0" : char}
+              </motion.span>
+            ))}
+            {Array.from("Projects").map((char, index) => (
+              <motion.span
+                key={`projects-${index}`}
+                variants={{
+                  hidden: { opacity: 0, y: 12, filter: "blur(4px)" },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    filter: "blur(0px)",
+                    transition: { delay: 0.15 + index * 0.06 }
+                  }
+                }}
+                className="inline-block mr-[0.02em] text-gradient-primary"
+              >
+                {char}
+              </motion.span>
+            ))}
+          </motion.h2>
           <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto">
             A selection of projects that showcase my skills and passion for creating exceptional digital experiences.
           </p>

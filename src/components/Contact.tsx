@@ -18,13 +18,44 @@ const Contact = () => {
         >
 
           <motion.h2
-            className="font-display text-4xl sm:text-5xl font-bold mb-6"
+            className="font-display text-4xl sm:text-5xl font-bold mb-6 text-foreground"
             initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
+            whileInView="visible"
+            viewport={{ once: true }}
           >
-            <span className="text-gradient-primary inline-block animate-title-glow">
-              Contact
-            </span>
+            {Array.from("Contact ").map((char, index) => (
+              <motion.span
+                key={`contact-prefix-${index}`}
+                variants={{
+                  hidden: { opacity: 0, y: 10 },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    transition: { delay: index * 0.05 }
+                  }
+                }}
+                className="inline-block mr-[0.02em]"
+              >
+                {char === " " ? "\u00A0" : char}
+              </motion.span>
+            ))}
+            {Array.from("Me").map((char, index) => (
+              <motion.span
+                key={`contact-main-${index}`}
+                variants={{
+                  hidden: { opacity: 0, y: 12, filter: "blur(4px)" },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    filter: "blur(0px)",
+                    transition: { delay: 0.15 + index * 0.06 }
+                  }
+                }}
+                className="inline-block mr-[0.02em] text-gradient-primary"
+              >
+                {char}
+              </motion.span>
+            ))}
           </motion.h2>
           <motion.p
             className="text-muted-foreground text-base sm:text-lg max-w-xl mx-auto"
@@ -42,6 +73,7 @@ const Contact = () => {
               <motion.div
                 key={idx}
                 whileHover={{ scale: 1.02, x: 5 }}
+                {...(item.label === "Email" ? { "data-aos": "fade-right" } : {})}
                 className="flex items-center gap-4 p-4 bg-card/50 backdrop-blur-lg rounded-2xl border border-border/50 hover:border-primary/50 transition-all duration-300"
               >
                 <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0 border border-primary/20">
@@ -59,10 +91,10 @@ const Contact = () => {
             <input type="hidden" name="access_key" value="4a4d7a0d-ade2-4214-8a68-e5b0ebdd53bb" />
             <div className="space-y-4">
               <input type="text" name="name" placeholder="Your Name" required className="w-full px-4 py-4 bg-card/50 border border-border/50 rounded-xl focus:outline-none focus:border-primary/60 transition-all placeholder:text-muted-foreground/60 backdrop-blur-sm shadow-inner" />
-              <input type="email" name="email" placeholder="Your Email" required className="w-full px-4 py-4 bg-card/50 border border-border/50 rounded-xl focus:outline-none focus:border-primary/60 transition-all placeholder:text-muted-foreground/60 backdrop-blur-sm shadow-inner" />
+              <input type="email" name="email" placeholder="Your Email" required data-aos="fade-right" className="w-full px-4 py-4 bg-card/50 border border-border/50 rounded-xl focus:outline-none focus:border-primary/60 transition-all placeholder:text-muted-foreground/60 backdrop-blur-sm shadow-inner" />
               <textarea name="message" placeholder="Your Message" rows={4} required className="w-full px-4 py-4 bg-card/50 border border-border/50 rounded-xl focus:outline-none focus:border-primary/60 transition-all placeholder:text-muted-foreground/60 backdrop-blur-sm shadow-inner resize-none" />
             </div>
-            <button type="submit" className="w-full py-4 font-display font-bold rounded-xl bg-primary text-primary-foreground hover:shadow-[0_0_30px_rgba(34,211,238,0.4)] transition-all">
+            <button type="submit" data-aos="zoom-out-down" className="w-full py-4 font-display font-bold rounded-xl bg-primary text-primary-foreground hover:shadow-[0_0_30px_rgba(34,211,238,0.4)] transition-all">
               Submit
             </button>
           </form>
