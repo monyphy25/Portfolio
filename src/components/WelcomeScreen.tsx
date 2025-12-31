@@ -154,7 +154,7 @@ const WelcomeScreen = ({ onComplete }: WelcomeScreenProps) => {
                                 <Rocket className="w-10 h-10 text-cyan-400 group-hover:text-cyan-300 transition-colors" />
                                 <div className="absolute inset-0 bg-cyan-400/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity rounded-full" />
                             </motion.button>
-                            <span className="text-cyan-400/60 text-sm font-medium tracking-widest uppercase">Launch Experience</span>
+
                         </div>
                     </div>
                 </motion.div>

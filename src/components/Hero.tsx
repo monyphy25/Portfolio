@@ -46,13 +46,34 @@ const Hero = () => {
           className="relative z-10"
         >
 
+          {/* Minimalist Premium Prefix */}
+          <motion.div
+            className="flex items-center gap-4 mb-4"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <span className="text-xs sm:text-sm font-medium tracking-[0.5em] text-cyan-400/70 uppercase">
+              <motion.span
+                initial={{ filter: "blur(10px)", opacity: 0 }}
+                animate={{ filter: "blur(0px)", opacity: 1 }}
+                transition={{ duration: 1, delay: 0.2 }}
+              >
+                I'm a
+              </motion.span>
+            </span>
+            <motion.div
+              initial={{ width: 0, opacity: 0 }}
+              animate={{ width: "100px", opacity: 0.3 }}
+              transition={{ delay: 0.5, duration: 1.2, ease: "easeInOut" }}
+              className="h-[1px] bg-gradient-to-r from-cyan-400 to-transparent hidden sm:block"
+            />
+          </motion.div>
+
           <motion.h1
             className="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 leading-[1.1] transition-colors"
             style={{ color: 'var(--color-foreground)' }}
           >
-            <span className="block text-sm sm:text-base md:text-lg font-bold tracking-[0.2em] text-cyan-400/80 mb-2 sm:mb-4 uppercase">
-              I AM A
-            </span>
             <span className="block pb-2 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
               Web
             </span>
