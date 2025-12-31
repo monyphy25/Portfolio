@@ -1,6 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import TextType from "./TextType";
+import { SplineSceneBasic } from "@/components/ui/demo";
+import { Rocket, Sparkles, Terminal } from "lucide-react";
 
 interface WelcomeScreenProps {
     onComplete: () => void;
@@ -24,15 +26,17 @@ const CharacterReveal = ({ text, delay = 0, className = "" }: { text: string, de
         visible: {
             opacity: 1,
             y: 0,
+            filter: "blur(0px)",
             transition: {
                 type: "spring" as const,
-                damping: 12,
+                damping: 25,
                 stiffness: 200,
             },
         },
         hidden: {
             opacity: 0,
-            y: 20,
+            y: 10,
+            filter: "blur(8px)",
         },
     };
 
@@ -41,7 +45,7 @@ const CharacterReveal = ({ text, delay = 0, className = "" }: { text: string, de
             variants={container}
             initial="hidden"
             animate="visible"
-            className={`flex flex-wrap justify-center whitespace-nowrap ${className}`}
+            className={`flex flex-wrap justify-center ${className}`}
         >
             {letters.map((letter, index) => (
                 <motion.span
@@ -110,93 +114,48 @@ const WelcomeScreen = ({ onComplete }: WelcomeScreenProps) => {
                     </div>
 
                     {/* Content Container */}
-                    <div className="relative z-10 flex flex-col items-center text-center w-full max-w-5xl mx-auto px-4 pt-20">
+                    <div className="relative z-10 flex flex-col items-center text-center w-full max-w-6xl mx-auto px-4 py-10 overflow-y-auto max-h-screen no-scrollbar">
 
-                        {/* Animated Energy Core */}
-                        <div className="relative mb-8 w-64 h-64 flex items-center justify-center">
-                            {/* Outer Ring */}
-                            <motion.div
-                                className="absolute inset-0 border border-cyan-500/30 rounded-full"
-                                animate={{ rotate: 360, scale: [1, 1.05, 1] }}
-                                transition={{ rotate: { duration: 10, repeat: Infinity, ease: "linear" }, scale: { duration: 2, repeat: Infinity } }}
-                            />
-                            {/* Middle Ring */}
-                            <motion.div
-                                className="absolute inset-4 border border-dashed border-purple-500/30 rounded-full"
-                                animate={{ rotate: -360 }}
-                                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                            />
-                            {/* Inner Core */}
-                            <motion.div
-                                className="w-32 h-32 bg-gradient-to-tr from-cyan-500 to-purple-600 rounded-full blur-md opacity-80"
-                                animate={{ scale: [0.8, 1.2, 0.8], opacity: [0.6, 1, 0.6] }}
-                                transition={{ duration: 3, repeat: Infinity }}
-                            />
-                            <motion.div
-                                className="absolute w-28 h-28 bg-white/10 rounded-full backdrop-blur-sm z-10"
-                            />
+                        {/* Interactive 3D Robot */}
+                        <div className="w-full max-w-4xl mb-8 relative z-10">
+                            <SplineSceneBasic />
                         </div>
 
                         {/* Main Title Name */}
-                        <div className="mb-12 relative z-20 flex flex-col items-center">
-                            <CharacterReveal
-                                text="WELCOME TO MY"
-                                delay={2}
-                                className="text-xl md:text-3xl font-display font-medium tracking-[0.6em] text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.3)] mb-4"
-                            />
-
-                            {/* Looping Typewriter for PORTFOLIO */}
-                            <motion.div
-                                animate={{
-                                    y: [0, -8, 0],
-                                }}
-                                transition={{
-                                    duration: 4,
-                                    repeat: Infinity,
-                                    ease: "easeInOut"
-                                }}
-                                className="text-5xl md:text-8xl font-display font-black tracking-tight uppercase bg-gradient-to-r from-cyan-400 via-white to-purple-500 bg-clip-text text-transparent p-4 min-h-[160px] flex items-center justify-center"
-                            >
-                                <TextType
-                                    text={["PORTFOLIO"]}
-                                    typingSpeed={100}
-                                    pauseDuration={2000}
-                                    showCursor={true}
-                                    cursorCharacter="|"
-                                />
-                            </motion.div>
-                        </div>
-
-                        {/* Enter Icon Button */}
-                        <motion.button
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                handleEnter();
-                            }}
-                            initial={{ opacity: 0, scale: 0 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: 2.2, type: "spring" }}
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}
-                            className="relative mb-12 w-20 h-20 flex items-center justify-center bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 rounded-full backdrop-blur-sm group transition-all duration-300 shadow-[0_0_30px_rgba(34,211,238,0.3)]"
-                        >
-                            <svg className="w-10 h-10 text-cyan-400 group-hover:text-cyan-300 transition-colors fill-current pl-1" viewBox="0 0 24 24">
-                                <path d="M8 5v14l11-7z" />
-                            </svg>
-                            <div className="absolute inset-0 bg-cyan-400/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity rounded-full" />
-                        </motion.button>
-
-                        {/* Social Icons */}
                         <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 2.5, duration: 1 }}
-                            className="flex gap-8 text-white/40 mb-12"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, ease: "easeOut", delay: 0.5 }}
+                            className="mb-12 relative z-20 flex flex-col items-center w-full px-4 max-w-full overflow-hidden"
                         >
-                            <a href="#" className="hover:text-cyan-400 hover:scale-110 transition-all duration-300"><svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" /></svg></a>
-                            <a href="#" className="hover:text-cyan-400 hover:scale-110 transition-all duration-300"><svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fillRule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clipRule="evenodd" /></svg></a>
-                            <a href="#" className="hover:text-cyan-400 hover:scale-110 transition-all duration-300"><svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fillRule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.468 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clipRule="evenodd" /></svg></a>
+                            <span className="text-sm sm:text-2xl md:text-3xl font-display font-medium tracking-tight sm:tracking-[0.4em] text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.3)] break-words mb-4">
+                                WELCOME TO MY
+                            </span>
+
+                            <div className="text-2xl sm:text-4xl md:text-6xl font-display font-black tracking-tight uppercase bg-gradient-to-r from-cyan-400 via-white to-purple-500 bg-clip-text text-transparent p-2 sm:p-4 min-h-[80px] sm:min-h-[120px] flex items-center justify-center w-full">
+                                PORTFOLIO
+                            </div>
                         </motion.div>
+
+                        {/* Enter Icon Button at Bottom */}
+                        <div className="flex flex-col items-center gap-4">
+                            <motion.button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleEnter();
+                                }}
+                                initial={{ opacity: 0, scale: 0 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ delay: 2.2, type: "spring" }}
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.9 }}
+                                className="relative w-20 h-20 flex items-center justify-center bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 rounded-full backdrop-blur-sm group transition-all duration-300 shadow-[0_0_30px_rgba(34,211,238,0.3)]"
+                            >
+                                <Rocket className="w-10 h-10 text-cyan-400 group-hover:text-cyan-300 transition-colors" />
+                                <div className="absolute inset-0 bg-cyan-400/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity rounded-full" />
+                            </motion.button>
+                            <span className="text-cyan-400/60 text-sm font-medium tracking-widest uppercase">Launch Experience</span>
+                        </div>
                     </div>
                 </motion.div>
             )}

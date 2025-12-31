@@ -473,3 +473,10 @@ button:focus-visible {
 .animate-pulse-cyan {
   animation: pulse-cyan-ring 2.4s ease-out infinite;
 }
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

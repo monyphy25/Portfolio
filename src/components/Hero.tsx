@@ -47,13 +47,13 @@ const Hero = () => {
         >
 
           <motion.h1
-            className="text-6xl md:text-8xl font-bold mb-6 leading-tight transition-colors"
+            className="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 leading-tight transition-colors"
             style={{ color: 'var(--color-foreground)' }}
           >
             <span className="block pb-2 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
               Web
             </span>
-            <span className="flex items-center">
+            <span className="flex items-center flex-wrap">
               <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
                 <TypewriterText text="Developer" />
               </span>
@@ -65,46 +65,46 @@ const Hero = () => {
             </span>
           </motion.h1>
 
-          <p className="text-xl font-medium mb-8" style={{ color: 'var(--color-primary)' }}>
+          <p className="text-lg sm:text-xl font-medium mb-8" style={{ color: 'var(--color-primary)' }}>
             Frontend Developer & Creative Designer
           </p>
 
-          <p className="max-w-lg mb-10 leading-relaxed text-lg" style={{ color: 'var(--color-muted-foreground)' }}>
+          <p className="max-w-lg mb-10 leading-relaxed text-base sm:text-lg" style={{ color: 'var(--color-muted-foreground)' }}>
             I create exceptional digital experiences through innovative web development and stunning design solutions.
           </p>
 
-          <div className="flex items-center gap-6 mb-10">
+          <div className="flex items-center gap-4 sm:gap-6 mb-10">
             <a
               href="#"
-              className="w-12 h-12 rounded-full flex items-center justify-center transition-all bg-foreground text-background hover:bg-primary hover:text-primary-foreground duration-300 hover:scale-110"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all bg-foreground text-background hover:bg-primary hover:text-primary-foreground duration-300 hover:scale-110"
             >
-              <Github className="w-6 h-6" />
+              <Github className="w-5 h-5 sm:w-6 sm:h-6" />
             </a>
             <a
               href="#"
-              className="w-12 h-12 rounded-full flex items-center justify-center transition-all bg-foreground text-background hover:bg-primary hover:text-primary-foreground duration-300 hover:scale-110"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all bg-foreground text-background hover:bg-primary hover:text-primary-foreground duration-300 hover:scale-110"
             >
-              <Twitter className="w-6 h-6" />
+              <Twitter className="w-5 h-5 sm:w-6 sm:h-6" />
             </a>
             <a
               href="#"
-              className="w-12 h-12 rounded-full flex items-center justify-center transition-all bg-foreground text-background hover:bg-primary hover:text-primary-foreground duration-300 hover:scale-110"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all bg-foreground text-background hover:bg-primary hover:text-primary-foreground duration-300 hover:scale-110"
             >
-              <Linkedin className="w-6 h-6" />
+              <Linkedin className="w-5 h-5 sm:w-6 sm:h-6" />
             </a>
           </div>
 
-          <div className="flex gap-4 font-display">
+          <div className="flex flex-col sm:flex-row gap-4 font-display">
             <a
               href="/cv.pdf"
               download="My_CV.pdf"
-              className="px-8 py-3 bg-gradient-to-r from-cyan-400 to-blue-600 text-white font-bold rounded-xl hover:shadow-[0_0_20px_rgba(34,211,238,0.5)] active:scale-95 transition-all flex items-center justify-center shadow-lg"
+              className="px-8 py-3 bg-gradient-to-r from-cyan-400 to-blue-600 text-white font-bold rounded-xl hover:shadow-[0_0_20px_rgba(34,211,238,0.5)] active:scale-95 transition-all flex items-center justify-center shadow-lg w-full sm:w-auto"
             >
               Download CV
             </a>
             <a
               href="#contact"
-              className="px-8 py-3 border-2 font-bold rounded-xl transition-all flex items-center justify-center shadow-sm active:scale-95 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] bg-white/5 border-white/15 text-foreground/90 hover:border-cyan-400/70 backdrop-blur-lg"
+              className="px-8 py-3 border-2 font-bold rounded-xl transition-all flex items-center justify-center shadow-sm active:scale-95 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] bg-white/5 border-white/15 text-foreground/90 hover:border-cyan-400/70 backdrop-blur-lg w-full sm:w-auto"
             >
               Contact Me
             </a>
@@ -116,11 +116,11 @@ const Hero = () => {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
-          className="relative flex justify-center"
+          className="relative flex justify-center order-first md:order-last"
         >
-          {/* Simple floating avatar */}
+          {/* Simple floating avatar - Responsive sizes */}
           <motion.div
-            className="relative w-[300px] h-[300px] md:w-[500px] md:h-[500px] transform-gpu"
+            className="relative w-[250px] h-[250px] sm:w-[350px] sm:h-[350px] md:w-[450px] md:h-[450px] lg:w-[500px] lg:h-[500px] transform-gpu"
             animate={{ y: [0, -15, 0] }}
             transition={{
               duration: 6,
@@ -137,7 +137,7 @@ const Hero = () => {
               />
             </div>
             {/* Soft ambient glow layers */}
-            <div className="absolute -inset-6 bg-cyan-500/10 blur-[80px] -z-10" />
+            <div className="absolute -inset-6 bg-cyan-500/10 blur-[60px] md:blur-[80px] -z-10" />
           </motion.div>
         </motion.div>
 

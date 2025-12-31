@@ -23,18 +23,19 @@ const About = () => {
         {/* Image Side - Styled like Hero Image */}
         <motion.div
           variants={{
-            hidden: { opacity: 0, scale: 0.9 },
+            hidden: { opacity: 0, x: -50 },
             visible: {
               opacity: 1,
-              scale: 1,
+              x: 0,
               transition: { duration: 0.8 }
             }
           }}
           className="relative flex justify-center"
+          data-aos="fade-right"
         >
           {/* Extremely lightweight float for performance */}
           <motion.div
-            className="relative w-[300px] h-[300px] lg:w-[400px] lg:h-[400px] transform-gpu"
+            className="relative w-[250px] h-[250px] sm:w-[320px] sm:h-[320px] md:w-[350px] md:h-[350px] lg:w-[400px] lg:h-[400px] transform-gpu"
             animate={{
               y: [0, -10, 0],
             }}
