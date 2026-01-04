@@ -33,31 +33,88 @@ const About = () => {
           className="relative flex justify-center"
           data-aos="fade-right"
         >
-          {/* Extremely lightweight float for performance */}
+          {/* Sleek Digital Reflector Container */}
           <motion.div
-            className="relative w-[250px] h-[250px] sm:w-[320px] sm:h-[320px] md:w-[350px] md:h-[350px] lg:w-[400px] lg:h-[400px] transform-gpu"
-            animate={{
-              y: [0, -10, 0],
-            }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            className="relative w-[300px] h-[300px] sm:w-[380px] sm:h-[380px] md:w-[420px] md:h-[420px] lg:w-[480px] lg:h-[480px] group"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            {/* Simple Cyan Border */}
-            <div className="absolute inset-0 rounded-2xl border-2 border-[#22d3ee]/50 z-20 shadow-[0_0_20px_rgba(34,211,238,0.2)]" />
+            {/* Ambient Background Glow - Subtle & Multi-layered */}
+            <div className="absolute inset-0 bg-cyan-500/5 blur-[100px] rounded-full animate-pulse" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-purple-500/5 via-transparent to-cyan-500/5 blur-[80px] -z-10" />
 
-            <div className="absolute inset-0 rounded-2xl overflow-hidden z-10 bg-black">
-              <img
-                src={aboutImg}
-                alt="Mony Profile"
-                className="w-full h-full object-cover"
+            {/* Kinetic Border - Single Thin Glowing Line */}
+            <svg className="absolute inset-[-10px] w-[calc(100%+20px)] h-[calc(100%+20px)] pointer-events-none z-30">
+              <motion.rect
+                x="5" y="5" width="calc(100% - 10px)" height="calc(100% - 10px)"
+                fill="none"
+                stroke="url(#grad1)"
+                strokeWidth="2"
+                rx="24"
+                strokeDasharray="100 300"
+                animate={{ strokeDashoffset: [0, -400] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
               />
-            </div>
+              <defs>
+                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#22d3ee" stopOpacity="0" />
+                  <stop offset="50%" stopColor="#22d3ee" stopOpacity="1" />
+                  <stop offset="100%" stopColor="#22d3ee" stopOpacity="0" />
+                </linearGradient>
+              </defs>
+            </svg>
 
-            {/* Subtle Static Glow */}
-            <div className="absolute -inset-4 bg-cyan-500/10 blur-[60px] -z-10" />
+            {/* Main Image Container with Parallax Effect */}
+            <motion.div
+              className="relative w-full h-full rounded-3xl overflow-hidden border border-white/10 bg-slate-900/50 backdrop-blur-sm z-20 shadow-2xl"
+              whileHover={{ scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 400, damping: 30 }}
+            >
+              <motion.div
+                className="w-full h-full"
+                whileHover={{ scale: 1.1, x: -5, y: -5 }}
+                transition={{ duration: 0.6 }}
+              >
+                <img
+                  src={aboutImg}
+                  alt="Mony Profile"
+                  className="w-full h-full object-cover grayscale-[0.3] contrast-[1.2] brightness-[0.9] group-hover:grayscale-0 group-hover:brightness-110 transition-all duration-700"
+                />
+              </motion.div>
+
+              {/* Dynamic Light Reflector Overlay */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                animate={{
+                  background: [
+                    "linear-gradient(45deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%)",
+                    "linear-gradient(45deg, rgba(255,255,255,0) 100%, rgba(255,255,255,0.1) 150%, rgba(255,255,255,0) 200%)"
+                  ]
+                }}
+                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+              />
+
+              {/* Interactive Scanning Bar - Reactive */}
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-0 group-hover:opacity-100 animate-scan transition-opacity" />
+            </motion.div>
+
+            {/* Tech Accents - Minimalist Geometric Shapes */}
+            <div className="absolute -top-4 -left-4 w-12 h-12 border-t-2 border-l-2 border-cyan-400/50 rounded-tl-3xl z-40 group-hover:border-cyan-400 transition-colors" />
+            <div className="absolute -bottom-4 -right-4 w-12 h-12 border-b-2 border-r-2 border-purple-400/50 rounded-br-3xl z-40 group-hover:border-purple-400 transition-colors" />
+
+            {/* Floating Data Dots */}
+            <div className="absolute top-10 right-[-20px] space-y-2 z-10">
+              {[1, 2, 3].map((i) => (
+                <motion.div
+                  key={i}
+                  className="w-1.5 h-1.5 rounded-full bg-cyan-400/40"
+                  animate={{ opacity: [0.2, 1, 0.2] }}
+                  transition={{ duration: 2, delay: i * 0.4, repeat: Infinity }}
+                />
+              ))}
+            </div>
           </motion.div>
         </motion.div>
 

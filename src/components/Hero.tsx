@@ -167,10 +167,13 @@ const Hero = () => {
             <div className="absolute inset-0 rounded-full border-4 border-[#22d3ee]/30 z-20 shadow-[0_0_30px_rgba(34,211,238,0.2)]" />
             <div className="absolute inset-0 rounded-full overflow-hidden z-10 bg-black">
               <img
-                src="/assets/anime_hero.png"
-                alt="Anime Avatar"
-                className="w-full h-full object-cover"
+                src="/assets/original_user.jpg"
+                alt="Developer Portrait"
+                className="w-full h-full object-cover contrast-[1.1] brightness-[1.05] hover:scale-105 transition-all duration-700"
               />
+              {/* Added techy scanline overlay */}
+              <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-cyan-400/10 to-transparent bg-[length:100%_6px] animate-scan opacity-40 mix-blend-overlay" />
+              <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_60px_rgba(34,211,238,0.3)] ring-1 ring-white/10" />
             </div>
             {/* Soft ambient glow layers */}
             <div className="absolute -inset-6 bg-cyan-500/10 blur-[60px] md:blur-[80px] -z-10" />

@@ -128,7 +128,7 @@ const Footer = () => {
               <ChevronUp className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:-translate-y-1 transition-all" />
             </button>
             <div className="text-muted-foreground text-xs font-mono">
-              v1.2.0
+              Go to top
             </div>
           </div>
         </div>
