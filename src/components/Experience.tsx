@@ -61,7 +61,7 @@ const Experience = () => {
                         whileInView={{ height: "100%" }}
                         transition={{ duration: 1.5, ease: "easeInOut" }}
                         viewport={{ once: true }}
-                        className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-cyan-500/20 via-cyan-500/50 to-cyan-500/20 md:-translate-x-1/2 origin-top"
+                        className="absolute left-2 xs:left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-cyan-500/20 via-cyan-500/50 to-cyan-500/20 md:-translate-x-1/2 origin-top"
                     />
 
                     <div className="flex flex-col gap-12">
@@ -80,11 +80,11 @@ const Experience = () => {
                                     whileInView={{ scale: 1 }}
                                     transition={{ delay: 0.5 + (index * 0.2), type: "spring" }}
                                     viewport={{ once: true }}
-                                    className="absolute left-4 md:left-1/2 w-4 h-4 rounded-full bg-cyan-500 border-4 border-white dark:border-black transform -translate-x-1.5 md:-translate-x-1/2 mt-1.5 md:mt-0 z-10 shadow-[0_0_20px_rgba(6,182,212,0.5)]"
+                                    className="absolute left-2 xs:left-4 md:left-1/2 w-4 h-4 rounded-full bg-cyan-500 border-4 border-white dark:border-black transform -translate-x-1.5 md:-translate-x-1/2 mt-1.5 md:mt-0 z-10 shadow-[0_0_20px_rgba(6,182,212,0.5)]"
                                 />
 
                                 {/* Content Card */}
-                                <div className={`ml-12 md:ml-0 md:w-[calc(50%-3rem)] p-6 md:p-8 rounded-2xl bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm border border-black/5 dark:border-white/10 hover:border-cyan-500/30 transition-colors duration-300 shadow-sm hover:shadow-xl group ${index % 2 === 0 ? 'md:text-left' : 'md:text-right'}`}>
+                                <div className={`ml-8 xs:ml-12 md:ml-0 md:w-[calc(50%-3rem)] p-5 xs:p-6 md:p-8 rounded-2xl bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm border border-black/5 dark:border-white/10 hover:border-cyan-500/30 transition-colors duration-300 shadow-sm hover:shadow-xl group ${index % 2 === 0 ? 'md:text-left' : 'md:text-right'}`}>
                                     <div className={`flex flex-col gap-2 mb-4 ${index % 2 === 0 ? 'md:items-start' : 'md:items-end'}`}>
                                         <h3 className="text-xl font-bold text-foreground group-hover:text-cyan-500 transition-colors">{exp.role}</h3>
                                         <div className="flex items-center gap-2 text-sm text-cyan-600 dark:text-cyan-400 font-medium">

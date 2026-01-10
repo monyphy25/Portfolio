@@ -21,7 +21,7 @@ const About = () => {
             viewport={{ once: true }}
             className="relative group mx-auto md:mx-0"
           >
-            <div className="relative w-[300px] h-[300px] sm:w-[350px] sm:h-[350px] md:w-[400px] md:h-[400px] overflow-hidden rounded-3xl">
+            <div className="relative w-[280px] h-[280px] xs:w-[320px] xs:h-[320px] sm:w-[350px] sm:h-[350px] md:w-[400px] md:h-[400px] overflow-hidden rounded-3xl">
               {/* Dual Glow Effect */}
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-red-600 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
 
@@ -111,8 +111,8 @@ const About = () => {
                 className="space-y-2 mb-8"
               >
                 <h3 className="text-xl font-bold text-foreground">Core Strengths:</h3>
-                <ul className="grid grid-cols-2 gap-x-4 gap-y-2 text-muted-foreground">
-                  <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-cyan-500 rounded-full" /> Full-Stack Architecture</li>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-muted-foreground">
+                  <li className="flex items-center gap-2 text-sm sm:text-base"><div className="w-1.5 h-1.5 bg-cyan-500 rounded-full" /> Full-Stack Architecture</li>
                   <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-cyan-500 rounded-full" /> Performance Optimization</li>
                   <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-cyan-500 rounded-full" /> UI/UX Design Implementation</li>
                   <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-cyan-500 rounded-full" /> REST & GraphQL APIs</li>

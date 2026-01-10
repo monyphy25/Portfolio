@@ -164,7 +164,7 @@ const Guestbook = () => {
                     </motion.div>
 
                     {/* Comments List - Infinite Vertical Scroll (bottom to top) */}
-                    <div className="relative h-[500px] overflow-hidden mask-gradient-y">
+                    <div className="relative h-[350px] sm:h-[450px] md:h-[500px] overflow-hidden mask-gradient-y">
                         {/* Gradient Masks for smooth fade in/out */}
                         <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none transition-colors" />
                         <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none transition-colors" />

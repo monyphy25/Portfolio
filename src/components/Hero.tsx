@@ -111,12 +111,12 @@ const Hero = () => {
             </div>
           </div>
 
-          <div className="mb-6">
-            <h1 className="text-7xl sm:text-8xl md:text-9xl font-black leading-none tracking-tighter min-h-[1.1em]">
+          <div className="mb-6 mt-4 lg:mt-0">
+            <h1 className="text-4xl xs:text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black leading-none tracking-tighter min-h-[1.1em]">
               <span className="block text-cyan-400 pb-2 drop-shadow-lg">
                 <TextReveal text="Web" />
               </span>
-              <span className="block text-purple-400 drop-shadow-lg">
+              <span className="block text-purple-400 drop-shadow-lg leading-tight">
                 <TypewriterText text="Developer" />
               </span>
             </h1>
@@ -126,7 +126,7 @@ const Hero = () => {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ type: "spring", stiffness: 40, damping: 25, delay: 0.4 }}
-            className="text-xl sm:text-2xl font-bold text-orange-400 mb-6 tracking-wide underline underline-offset-8 decoration-orange-400/20"
+            className="text-lg sm:text-xl md:text-2xl font-bold text-orange-400 mb-6 tracking-wide underline underline-offset-8 decoration-orange-400/20"
           >
             Frontend Developer & Creative Designer
           </motion.p>
@@ -217,7 +217,7 @@ const Hero = () => {
                 damping: 15,
                 delay: 0.2
               }}
-              className="relative w-72 h-72 sm:w-[500px] sm:h-[500px] rounded-full p-2 border border-cyan-500/30 shadow-2xl overflow-hidden group-hover:border-cyan-400/50 transition-colors duration-500"
+              className="relative w-64 h-64 xs:w-72 xs:h-72 sm:w-[400px] sm:h-[400px] lg:w-[500px] lg:h-[500px] rounded-full p-2 border border-cyan-500/30 shadow-2xl overflow-hidden group-hover:border-cyan-400/50 transition-colors duration-500"
             >
               <div className="relative w-full h-full rounded-full overflow-hidden bg-gradient-to-b from-cyan-500/5 to-purple-600/10">
                 {/* Image - Animates from Right to Left */}
