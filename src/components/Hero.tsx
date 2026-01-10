@@ -84,7 +84,7 @@ const Hero = () => {
     >
 
 
-      <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 items-center relative z-10">
+      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center relative z-10 pt-10 lg:pt-0">
         {/* Left Content */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
@@ -95,7 +95,7 @@ const Hero = () => {
             damping: 20,
             mass: 1
           }}
-          className="order-2 lg:order-1"
+          className="order-2 lg:order-1 text-center lg:text-left"
         >
           {/* HI I AM Badge */}
           <div className="relative inline-block mb-10 group">
@@ -140,7 +140,7 @@ const Hero = () => {
             I create exceptional digital experiences through innovative web development and stunning design solutions.
           </motion.p>
 
-          <div className="flex flex-col gap-10 items-start">
+          <div className="flex flex-col gap-10 items-center lg:items-start">
             {/* Social Icons */}
             <div className="flex gap-4">
               {[
@@ -160,7 +160,7 @@ const Hero = () => {
             </div>
 
             {/* Buttons */}
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
               <motion.a
                 href="#"
                 whileHover={{ scale: 1.05 }}
