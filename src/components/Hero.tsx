@@ -95,7 +95,7 @@ const Hero = () => {
             damping: 20,
             mass: 1
           }}
-          className="order-1 lg:order-1"
+          className="order-2 lg:order-1"
         >
           {/* HI I AM Badge */}
           <div className="relative inline-block mb-10 group">
@@ -190,7 +190,7 @@ const Hero = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 1.5, ease: "easeInOut" }}
           style={{ x: springX, y: springY }}
-          className="order-2 lg:order-2 flex justify-center items-center relative"
+          className="order-1 lg:order-2 flex justify-center items-center relative"
         >
           <motion.div
             animate={{ y: [0, -15, 0] }}
