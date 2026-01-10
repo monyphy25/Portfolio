@@ -34,59 +34,54 @@ const Projects = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="projects" className="py-20 sm:py-32 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
-        <motion.div ref={ref} initial={{ opacity: 0, y: 50 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8 }} className="text-center mb-12 sm:mb-16">
-          <p className="text-primary font-medium tracking-widest uppercase mb-4 text-sm">Portfolio</p>
+    <section id="projects" className="py-20 sm:py-32 px-4 sm:px-6 lg:px-8 relative">
+      {/* Background Accent */}
+      <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-purple-500/5 blur-[120px] rounded-full -z-10" />
+
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, x: -50 }}
+          animate={isInView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+          className="mb-16 sm:mb-24 text-center"
+        >
+          <span className="text-cyan-500 font-mono text-sm tracking-widest uppercase mb-4 block">Archive</span>
           <motion.h2
             className="font-display text-4xl sm:text-5xl font-bold mb-6 text-foreground"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
           >
-            {Array.from("My ").map((char, index) => (
-              <motion.span
-                key={`my-${index}`}
-                variants={{
-                  hidden: { opacity: 0, y: 10 },
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                    transition: { delay: index * 0.05 }
-                  }
-                }}
-                className="inline-block mr-[0.02em]"
-              >
-                {char === " " ? "\u00A0" : char}
-              </motion.span>
-            ))}
-            {Array.from("Projects").map((char, index) => (
-              <motion.span
-                key={`projects-${index}`}
-                variants={{
-                  hidden: { opacity: 0, y: 12, filter: "blur(4px)" },
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                    filter: "blur(0px)",
-                    transition: { delay: 0.15 + index * 0.06 }
-                  }
-                }}
-                className="inline-block mr-[0.02em] text-gradient-primary"
-              >
-                {char}
-              </motion.span>
-            ))}
+            My <span className="text-cyan-500">Projects</span>
           </motion.h2>
-          <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto">
-            A selection of projects that showcase my skills and passion for creating exceptional digital experiences.
-          </p>
+          <motion.p
+            initial={{ opacity: 0, x: 50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 1.5, ease: "easeOut", delay: 0.3 }}
+            className="text-muted-foreground max-w-2xl mx-auto text-lg"
+          >
+            A selection of my recent work, featuring full-stack applications and interactive experiments.
+          </motion.p>
         </motion.div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+
+        <motion.div
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          variants={{
+            hidden: { opacity: 0 },
+            show: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.2
+              }
+            }
+          }}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-50px" }}
+        >
           {projects.map((project, index) => (
             <ProjectCard key={project.title} {...project} index={index} />
           ))}
-        </div>
+        </motion.div>
+
       </div>
     </section>
   );

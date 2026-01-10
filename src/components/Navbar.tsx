@@ -5,8 +5,10 @@ import { Menu, X, Sun, Moon } from "lucide-react";
 const navLinks = [
   { href: "#", label: "Home" },
   { href: "#about", label: "About" },
-  { href: "#skills", label: "Skill" },
-  { href: "#projects", label: "Project" },
+  { href: "#experience", label: "Experience" },
+  { href: "#skills", label: "Skills" },
+  { href: "#projects", label: "Projects" },
+  { href: "#education", label: "Education" },
   { href: "#contact", label: "Contact" },
 ];
 
@@ -32,20 +34,7 @@ const Navbar = ({ isLight, setIsLight }: NavbarProps) => {
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <a href="#" className="font-display font-bold text-xl sm:text-2xl tracking-tighter flex items-center gap-3">
           {/* Animated Cartoon Character */}
-          <motion.div
-            animate={{
-              y: [0, -8, 0],
-              rotate: [0, 10, -10, 0]
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-            className="text-3xl"
-          >
-            👨‍💻
-          </motion.div>
+
 
           {Array.from("MONY PHY").map((char, index) => (
             <motion.span

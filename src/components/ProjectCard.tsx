@@ -46,15 +46,23 @@ const ProjectCard = ({ title, description, image, tags, liveUrl, githubUrl, inde
         rotateY,
         transformStyle: "preserve-3d",
       }}
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={
+        index === 0 ? { opacity: 0, x: -70 } :
+          index === 1 ? { opacity: 0, y: -70 } :
+            { opacity: 0, x: 70 }
+      }
+      whileInView={
+        index === 0 ? { opacity: 1, x: 0 } :
+          index === 1 ? { opacity: 1, y: 0 } :
+            { opacity: 1, x: 0 }
+      }
       viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
+      transition={{ duration: 1.5, delay: index * 0.2, ease: "easeOut" }}
       className="group relative"
     >
       <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-3xl blur opacity-0 group-hover:opacity-20 transition duration-1000 group-hover:duration-200" />
 
-      <div className="relative bg-white dark:bg-black/40 backdrop-blur-xl rounded-3xl overflow-hidden border border-black/5 dark:border-white/10 transition-all duration-500 shadow-2xl">
+      <div className="relative bg-white dark:bg-black/40 backdrop-blur-xl rounded-3xl overflow-hidden border border-black/5 dark:border-white/10 transition-colors duration-500 shadow-2xl">
         <div className="relative h-48 sm:h-64 overflow-hidden" style={{ transform: "translateZ(20px)" }}>
           <img
             src={image}

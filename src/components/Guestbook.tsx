@@ -84,42 +84,34 @@ const Guestbook = () => {
             <div className="max-w-4xl mx-auto relative z-10">
                 <div className="text-center mb-16">
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        initial={{ opacity: 0, x: -50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 1.5, ease: "easeOut" }}
                         viewport={{ once: true }}
-                        className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-sm text-white/80 backdrop-blur-md mb-6"
+                        className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-sm text-cyan-200 backdrop-blur-md mb-6"
                     >
-                        <MessageSquare className="w-4 h-4 text-pink-400" />
+                        <MessageSquare className="w-4 h-4 text-cyan-400" />
                         <span>Sign the Guestbook</span>
                     </motion.div>
 
                     <motion.h2
                         className="font-display text-4xl sm:text-5xl font-bold mb-6 text-foreground"
-                        initial="hidden"
-                        whileInView="visible"
+                        initial={{ opacity: 0, x: -50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
+                        transition={{ duration: 1, ease: "easeOut" }}
                     >
-                        {Array.from("Comment").map((char, index) => (
-                            <motion.span
-                                key={`comment-${index}`}
-                                variants={{
-                                    hidden: { opacity: 0, y: 12, filter: "blur(4px)" },
-                                    visible: {
-                                        opacity: 1,
-                                        y: 0,
-                                        filter: "blur(0px)",
-                                        transition: { delay: index * 0.06 }
-                                    }
-                                }}
-                                className="inline-block mr-[0.02em] text-gradient-primary"
-                            >
-                                {char}
-                            </motion.span>
-                        ))}
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Comment</span>
                     </motion.h2>
-                    <p className="text-white/60 max-w-lg mx-auto">
+                    <motion.p
+                        initial={{ opacity: 0, x: 50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1.5, ease: "easeOut", delay: 0.3 }}
+                        className="text-muted-foreground max-w-lg mx-auto"
+                    >
                         Drop a comment, feedback, or just say hello! Your message will appear below instanty.
-                    </p>
+                    </motion.p>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-10">
@@ -127,6 +119,7 @@ const Guestbook = () => {
                     <motion.div
                         initial={{ opacity: 0, x: -50 }}
                         whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 1.5, ease: "easeOut" }}
                         viewport={{ once: true }}
                         className="bg-card border border-border rounded-3xl p-8 backdrop-blur-md h-fit shadow-xl transition-colors"
                     >
@@ -138,7 +131,7 @@ const Guestbook = () => {
                                     id="name"
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
-                                    className="w-full bg-secondary/30 border border-border rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all font-display"
+                                    className="w-full bg-secondary/30 border border-white/10 rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-cyan-500/50 transition-all font-display"
                                     placeholder="Your Name"
                                 />
                             </div>
@@ -149,17 +142,17 @@ const Guestbook = () => {
                                     value={message}
                                     onChange={(e) => setMessage(e.target.value)}
                                     rows={4}
-                                    className="w-full bg-secondary/30 border border-border rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none font-display"
+                                    className="w-full bg-secondary/30 border border-white/10 rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-cyan-500/50 transition-all resize-none font-display"
                                     placeholder="Type your message here..."
                                 />
                             </div>
                             <button
                                 type="submit"
                                 disabled={isSubmitting}
-                                className="mt-2 w-full bg-gradient-primary text-primary-foreground font-bold py-4 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg"
+                                className="mt-2 w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold py-4 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20"
                             >
                                 {isSubmitting ? (
-                                    <div className="w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
+                                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                                 ) : (
                                     <>
                                         <Send className="w-4 h-4" />
@@ -181,15 +174,15 @@ const Guestbook = () => {
                             {(comments.length > 0 ? [...comments, ...comments] : []).map((comment, index) => (
                                 <div
                                     key={`${comment.id}-${index}`}
-                                    className={`relative border rounded-2xl p-6 backdrop-blur-md flex gap-4 transition-all ${comment.date === "Just now" ? "bg-primary/10 border-primary shadow-glow-sm animate-fade-in-up" : "bg-card border-border shadow-sm"}`}
+                                    className={`relative border rounded-2xl p-6 backdrop-blur-md flex gap-4 transition-all ${comment.date === "Just now" ? "bg-cyan-500/10 border-cyan-500/50 shadow-[0_0_20px_rgba(6,182,212,0.15)] animate-fade-in-up" : "bg-card border-white/5 shadow-sm"}`}
                                 >
                                     {(comment.timestamp ? timeAgo(comment.timestamp) : comment.date) === "Just now" && (
-                                        <span className="absolute -top-2 -right-2 bg-gradient-primary text-primary-foreground text-[10px] font-bold px-2 py-1 rounded-full shadow-lg">
+                                        <span className="absolute -top-2 -right-2 bg-cyan-500 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-lg">
                                             NEW
                                         </span>
                                     )}
-                                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-primary flex items-center justify-center">
-                                        <User className="w-5 h-5 text-primary-foreground" />
+                                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center">
+                                        <User className="w-5 h-5 text-white" />
                                     </div>
                                     <div>
                                         <div className="flex items-center gap-2 mb-1">

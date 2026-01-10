@@ -1,6 +1,26 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Github, Linkedin, Twitter } from "lucide-react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
+import { Github, Facebook, Download, Mail } from "lucide-react";
+import monyHero from "../assets/mony_no_bg.png";
+
+
+const TextReveal = ({ text }: { text: string }) => {
+  return (
+    <span className="inline-block">
+      {text.split("").map((char, index) => (
+        <motion.span
+          key={index}
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: index * 0.1, type: "spring", stiffness: 100 }}
+          className="inline-block"
+        >
+          {char === " " ? "\u00A0" : char}
+        </motion.span>
+      ))}
+    </span>
+  );
+};
 
 const TypewriterText = ({ text }: { text: string }) => {
   const [displayedText, setDisplayedText] = useState("");
@@ -10,18 +30,18 @@ const TypewriterText = ({ text }: { text: string }) => {
   useEffect(() => {
     const handleTyping = () => {
       if (!isDeleting && displayedText === text) {
-        setSpeed(2000); // Pause at end of word
+        setSpeed(2000);
         setIsDeleting(true);
       } else if (isDeleting && displayedText === "") {
         setIsDeleting(false);
-        setSpeed(500); // Small pause before starting next loop
+        setSpeed(500);
       } else {
         setDisplayedText(prev =>
           isDeleting
             ? text.substring(0, prev.length - 1)
             : text.substring(0, prev.length + 1)
         );
-        setSpeed(isDeleting ? 75 : 150);
+        setSpeed(isDeleting ? 100 : 150);
       }
     };
 
@@ -29,158 +49,204 @@ const TypewriterText = ({ text }: { text: string }) => {
     return () => clearTimeout(timer);
   }, [displayedText, isDeleting, speed, text]);
 
-  return <span>{displayedText}</span>;
+  return (
+    <span className="relative">
+      {displayedText}
+      <motion.span
+        animate={{ opacity: [1, 0] }}
+        transition={{ duration: 0.8, repeat: Infinity }}
+        className="inline-block w-[3px] h-[0.9em] bg-pink-500 ml-1 align-middle"
+      />
+    </span>
+  );
 };
 
-
 const Hero = () => {
-  return (
-    <section id="home" className="min-h-screen flex items-center pt-20 px-4 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center">
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
 
-        {/* Text Content */}
+  const springX = useSpring(mouseX, { stiffness: 40, damping: 30 });
+  const springY = useSpring(mouseY, { stiffness: 40, damping: 30 });
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const { clientX, clientY } = e;
+    const moveX = clientX - window.innerWidth / 2;
+    const moveY = clientY - window.innerHeight / 2;
+    mouseX.set(moveX * 0.015);
+    mouseY.set(moveY * 0.015);
+  };
+
+  return (
+    <section
+      id="home"
+      className="min-h-screen flex items-center pt-20 px-6 sm:px-12 relative overflow-hidden bg-transparent"
+      onMouseMove={handleMouseMove}
+    >
+
+
+      <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 items-center relative z-10">
+        {/* Left Content */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-          className="relative z-10"
+          transition={{
+            type: "spring",
+            stiffness: 50,
+            damping: 20,
+            mass: 1
+          }}
+          className="order-1 lg:order-1"
         >
+          {/* HI I AM Badge */}
+          <div className="relative inline-block mb-10 group">
+            {/* Viewfinder Corners */}
+            <div className="absolute -top-2 -left-2 w-4 h-4 border-t-2 border-l-2 border-cyan-500/50" />
+            <div className="absolute -bottom-2 -right-2 w-4 h-4 border-b-2 border-r-2 border-cyan-500/50" />
 
-          {/* Futuristic Cyber-HUD Prefix */}
-          <motion.div
-            className="inline-flex items-center gap-4 mb-8 relative"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            {/* Viewfinder Corner Accents */}
-            <div className="absolute -top-1.5 -left-1.5 w-2 h-2 border-t-2 border-l-2 border-cyan-400/40" />
-            <div className="absolute -bottom-1.5 -right-1.5 w-2 h-2 border-b-2 border-r-2 border-cyan-400/40" />
-
-            <div className="px-4 py-2 bg-cyan-400/10 border border-cyan-400/20 backdrop-blur-xl rounded-sm flex items-center gap-3 shadow-[0_0_20px_rgba(34,211,238,0.1)] relative overflow-hidden group">
-              {/* Animated Scanline Overlay */}
-              <motion.div
-                animate={{ x: ["-100%", "200%"] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-y-0 w-1/2 bg-gradient-to-r from-transparent via-cyan-400/10 to-transparent skew-x-12"
-              />
-
-              <div className="relative flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_10px_rgba(34,211,238,1)]" />
-                <span className="text-[10px] sm:text-xs font-bold tracking-[0.4em] text-cyan-400 uppercase">
-                  Hi I am
-                </span>
-              </div>
-            </div>
-
-            {/* Futuristic Data-Link Line */}
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: "40px" }}
-              transition={{ delay: 0.5, duration: 0.8 }}
-              className="h-[1px] bg-gradient-to-r from-cyan-400/50 to-transparent hidden sm:block"
-            />
-          </motion.div>
-
-          <motion.h1
-            className="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 leading-[1.1] transition-colors"
-            style={{ color: 'var(--color-foreground)' }}
-          >
-            <span className="block pb-2 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-              Web
-            </span>
-            <span className="flex items-center flex-wrap">
-              <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
-                <TypewriterText text="Developer" />
+            <div className="px-5 py-2.5 bg-cyan-500/10 backdrop-blur-md rounded-lg border border-cyan-500/20 flex items-center gap-3">
+              <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_rgba(34,211,238,1)]" />
+              <span className="text-[11px] font-black tracking-[0.3em] text-cyan-400 uppercase">
+                Hello I'm
               </span>
-              <motion.span
-                animate={{ opacity: [1, 0, 1] }}
-                transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
-                className="inline-block w-[4px] h-[0.8em] bg-purple-500 ml-2 shadow-[0_0_10px_rgba(168,85,247,0.8)]"
-              />
-            </span>
-          </motion.h1>
-
-          <p className="text-lg sm:text-xl font-medium mb-8" style={{ color: 'var(--color-primary)' }}>
-            Frontend Developer & Creative Designer
-          </p>
-
-          <p className="max-w-lg mb-10 leading-relaxed text-base sm:text-lg" style={{ color: 'var(--color-muted-foreground)' }}>
-            I create exceptional digital experiences through innovative web development and stunning design solutions.
-          </p>
-
-          <div className="flex items-center gap-4 sm:gap-6 mb-10">
-            <a
-              href="#"
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all bg-foreground text-background hover:bg-primary hover:text-primary-foreground duration-300 hover:scale-110"
-            >
-              <Github className="w-5 h-5 sm:w-6 sm:h-6" />
-            </a>
-            <a
-              href="#"
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all bg-foreground text-background hover:bg-primary hover:text-primary-foreground duration-300 hover:scale-110"
-            >
-              <Twitter className="w-5 h-5 sm:w-6 sm:h-6" />
-            </a>
-            <a
-              href="#"
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all bg-foreground text-background hover:bg-primary hover:text-primary-foreground duration-300 hover:scale-110"
-            >
-              <Linkedin className="w-5 h-5 sm:w-6 sm:h-6" />
-            </a>
+            </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 font-display">
-            <a
-              href="/cv.pdf"
-              download="My_CV.pdf"
-              className="px-8 py-3 bg-gradient-to-r from-cyan-400 to-blue-600 text-white font-bold rounded-xl hover:shadow-[0_0_20px_rgba(34,211,238,0.5)] active:scale-95 transition-all flex items-center justify-center shadow-lg w-full sm:w-auto"
-            >
-              Download CV
-            </a>
-            <a
-              href="#contact"
-              className="px-8 py-3 border-2 font-bold rounded-xl transition-all flex items-center justify-center shadow-sm active:scale-95 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] bg-white/5 border-white/15 text-foreground/90 hover:border-cyan-400/70 backdrop-blur-lg w-full sm:w-auto"
-            >
-              Contact Me
-            </a>
+          <div className="mb-6">
+            <h1 className="text-7xl sm:text-8xl md:text-9xl font-black leading-none tracking-tighter min-h-[1.1em]">
+              <span className="block text-cyan-400 pb-2 drop-shadow-lg">
+                <TextReveal text="Web" />
+              </span>
+              <span className="block text-purple-400 drop-shadow-lg">
+                <TypewriterText text="Developer" />
+              </span>
+            </h1>
+          </div>
+
+          <motion.p
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ type: "spring", stiffness: 40, damping: 25, delay: 0.4 }}
+            className="text-xl sm:text-2xl font-bold text-orange-400 mb-6 tracking-wide underline underline-offset-8 decoration-orange-400/20"
+          >
+            Frontend Developer & Creative Designer
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ type: "spring", stiffness: 40, damping: 25, delay: 0.6 }}
+            className="text-lg text-muted-foreground max-w-lg mb-10 leading-relaxed font-medium"
+          >
+            I create exceptional digital experiences through innovative web development and stunning design solutions.
+          </motion.p>
+
+          <div className="flex flex-col gap-10 items-start">
+            {/* Social Icons */}
+            <div className="flex gap-4">
+              {[
+                { icon: <Github className="w-5 h-5" />, href: "https://github.com/monyphy25" },
+                { icon: <Facebook className="w-5 h-5" />, href: "https://www.facebook.com/share/1AmGdDt4fF/?mibextid=wwXIfr" },
+                { icon: <i className="fa-brands fa-tiktok text-xl"></i>, href: "https://www.tiktok.com/@phymuny" }
+              ].map((social, i) => (
+                <motion.a
+                  key={i}
+                  href={social.href}
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  className="w-12 h-12 bg-black/50 backdrop-blur-md border border-cyan-500/30 rounded-full flex items-center justify-center text-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.3)] transition-all hover:bg-cyan-500 hover:text-black hover:shadow-[0_0_25px_rgba(34,211,238,0.6)]"
+                >
+                  {social.icon}
+                </motion.a>
+              ))}
+            </div>
+
+            {/* Buttons */}
+            <div className="flex flex-wrap gap-4">
+              <motion.a
+                href="#"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold rounded-2xl transition-all shadow-[0_10px_20px_rgba(6,182,212,0.3)] flex items-center gap-2"
+              >
+                <Download className="w-5 h-5" />
+                Download CV
+              </motion.a>
+
+              <motion.a
+                href="#contact"
+                whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.05)" }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 border border-foreground/20 text-foreground font-bold rounded-2xl transition-all backdrop-blur-sm flex items-center gap-2"
+              >
+                <Mail className="w-5 h-5" />
+                Contact Me
+              </motion.a>
+            </div>
           </div>
         </motion.div>
 
-        {/* Image Content */}
+        {/* Right Content - Circle Frame Image */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-          className="relative flex justify-center order-first md:order-last"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.5, ease: "easeInOut" }}
+          style={{ x: springX, y: springY }}
+          className="order-2 lg:order-2 flex justify-center items-center relative"
         >
-          {/* Simple floating avatar - Responsive sizes */}
           <motion.div
-            className="relative w-[250px] h-[250px] sm:w-[350px] sm:h-[350px] md:w-[450px] md:h-[450px] lg:w-[500px] lg:h-[500px] transform-gpu"
             animate={{ y: [0, -15, 0] }}
-            transition={{
-              duration: 6,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            className="relative group"
           >
-            <div className="absolute inset-0 rounded-full border-4 border-[#22d3ee]/30 z-20 shadow-[0_0_30px_rgba(34,211,238,0.2)]" />
-            <div className="absolute inset-0 rounded-full overflow-hidden z-10 bg-black">
-              <img
-                src="/assets/original_user.jpg"
-                alt="Developer Portrait"
-                className="w-full h-full object-cover contrast-[1.1] brightness-[1.05] hover:scale-105 transition-all duration-700"
-              />
-              {/* Added techy scanline overlay */}
-              <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-cyan-400/10 to-transparent bg-[length:100%_6px] animate-scan opacity-40 mix-blend-overlay" />
-              <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_60px_rgba(34,211,238,0.3)] ring-1 ring-white/10" />
-            </div>
-            {/* Soft ambient glow layers */}
-            <div className="absolute -inset-6 bg-cyan-500/10 blur-[60px] md:blur-[80px] -z-10" />
+            {/* Decorative Rotating Ring */}
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+              className="absolute -inset-4 border-2 border-dashed border-cyan-500/20 rounded-full"
+            />
+
+            {/* Glow Effect */}
+            <div className="absolute -inset-8 bg-gradient-to-r from-cyan-500/20 to-purple-600/20 rounded-full blur-3xl opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
+
+            {/* Profile Frame - Animates from Left to Right */}
+            <motion.div
+              initial={{ opacity: 0, x: -80 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{
+                type: "spring",
+                stiffness: 30,
+                damping: 15,
+                delay: 0.2
+              }}
+              className="relative w-72 h-72 sm:w-[500px] sm:h-[500px] rounded-full p-2 border border-cyan-500/30 shadow-2xl overflow-hidden group-hover:border-cyan-400/50 transition-colors duration-500"
+            >
+              <div className="relative w-full h-full rounded-full overflow-hidden bg-gradient-to-b from-cyan-500/5 to-purple-600/10">
+                {/* Image - Animates from Right to Left */}
+                <motion.img
+                  initial={{ opacity: 0, x: 80, scale: 1.15 }}
+                  animate={{ opacity: 1, x: 0, scale: 1 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 25,
+                    damping: 15,
+                    delay: 0.4
+                  }}
+                  src={monyHero}
+                  alt="Mony Phy"
+                  className="w-full h-full object-cover object-top transition-transform duration-1000 group-hover:scale-110"
+                />
+
+                {/* Inner Shadow/Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-30" />
+              </div>
+            </motion.div>
+
           </motion.div>
         </motion.div>
 
       </div>
+
+
+
     </section>
   );
 };
