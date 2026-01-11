@@ -37,16 +37,13 @@ const Education = () => {
                     {educationData.map((edu, index) => (
                         <motion.div
                             key={index}
-                            initial={{ opacity: 0, x: index % 2 === 0 ? 30 : -30 }}
+                            initial={{ opacity: 0, x: 50 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true, amount: 0.2 }}
                             transition={{
                                 delay: index * 0.2,
                                 duration: 1.5,
-                                type: "spring",
-                                bounce: 0,
-                                stiffness: 40,
-                                damping: 15
+                                ease: "easeOut"
                             }}
                             className="group relative p-6 sm:p-8 bg-card/60 backdrop-blur-md border border-border rounded-2xl overflow-hidden hover:border-cyan-500/50 transition-all duration-500 shadow-lg hover:shadow-cyan-500/10"
                         >
