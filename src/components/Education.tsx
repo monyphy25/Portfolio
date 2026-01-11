@@ -24,7 +24,7 @@ const Education = () => {
                     initial={{ opacity: 0, x: 50 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 1.5, ease: "easeOut" }}
+                    transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
                     className="text-center mb-16"
                 >
                     <span className="text-cyan-500 font-mono text-sm tracking-widest uppercase">Academic Background</span>
@@ -37,13 +37,13 @@ const Education = () => {
                     {educationData.map((edu, index) => (
                         <motion.div
                             key={index}
-                            initial={{ opacity: 0, x: index === 0 ? -50 : 50 }}
+                            initial={{ opacity: 0, x: 50 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true, amount: 0.2 }}
                             transition={{
                                 delay: index * 0.2,
-                                duration: 1.5,
-                                ease: "easeOut"
+                                duration: 2,
+                                ease: [0.16, 1, 0.3, 1]
                             }}
                             className="group relative p-6 sm:p-8 bg-card/60 backdrop-blur-md border border-border rounded-2xl overflow-hidden hover:border-cyan-500/50 transition-all duration-500 shadow-lg hover:shadow-cyan-500/10"
                         >
