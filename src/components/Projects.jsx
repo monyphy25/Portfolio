@@ -1,12 +1,12 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import ProjectCard from "./ProjectCard";
-import mony1 from "../assets/mony1.png";
+import monyAbout from "../assets/mony_about.png";
 const projects = [
   {
     title: "Savory Bites",
     description: "A modern food delivery platform with real-time order tracking, curated restaurant listings, and seamless checkout experience. Built with focus on user experience and visual appeal.",
-    image: mony1,
+    image: monyAbout,
     tags: ["React", "Node.js", "MongoDB", "Stripe"],
     liveUrl: "#",
     githubUrl: "#",
