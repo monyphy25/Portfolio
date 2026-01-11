@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { Github, Facebook, Download, Mail } from "lucide-react";
 import monyHero from "../assets/mony_no_bg.png";
-import cvImg from "../assets/mony_cv.jpg";
+import cvFile from "../assets/mony.pdf";
 
 
 const TextReveal = ({ text }: { text: string }) => {
@@ -191,8 +191,8 @@ const Hero = () => {
             {/* Buttons */}
             <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
               <motion.a
-                href={cvImg}
-                download="PHY_MONY_CV.jpg"
+                href={cvFile}
+                download="PHY_MONY_CV.pdf"
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ type: "spring", stiffness: 40, damping: 20, delay: 0.8 }}
