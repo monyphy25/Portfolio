@@ -17,27 +17,30 @@ const About = () => {
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
+            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
             viewport={{ once: true }}
             className="relative group mx-auto md:mx-0"
           >
-            <div className="relative w-[280px] h-[280px] xs:w-[320px] xs:h-[320px] sm:w-[350px] sm:h-[350px] md:w-[400px] md:h-[400px] overflow-hidden rounded-3xl">
-              {/* Dual Glow Effect */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-red-600 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+            <div className="relative w-[280px] h-[280px] xs:w-[320px] xs:h-[320px] sm:w-[380px] sm:h-[380px] md:w-[420px] md:h-[420px]">
+              {/* Premium Frame Glow */}
+              <div className="absolute -inset-4 bg-gradient-to-tr from-cyan-500/20 to-purple-500/20 rounded-[2.5rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-              <div className="relative w-full h-full overflow-hidden rounded-3xl">
-                <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 via-transparent to-red-500/10 z-10" />
-                <img
-                  src={aboutImg}
-                  alt="Mony Phy"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
+              {/* The Frame */}
+              <div className="relative w-full h-full p-2 rounded-[2.5rem] border-2 border-white/5 bg-white/5 backdrop-blur-sm shadow-2xl overflow-hidden group-hover:border-cyan-500/30 transition-colors duration-500">
+                <div className="relative w-full h-full rounded-[2rem] overflow-hidden">
+                  <motion.img
+                    initial={{ scale: 1.1 }}
+                    whileInView={{ scale: 1 }}
+                    transition={{ duration: 1.5, ease: "easeOut" }}
+                    src={aboutImg}
+                    alt="Mony Phy"
+                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                  />
+                  {/* Subtle Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-50" />
+                </div>
               </div>
             </div>
-
-            {/* Cyber Decorations */}
-            <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl -z-10 animate-pulse" />
-            <div className="absolute -top-10 -right-10 w-40 h-40 bg-red-500/10 rounded-full blur-3xl -z-10 animate-pulse" style={{ animationDelay: '2s' }} />
           </motion.div>
 
           {/* Text Content */}

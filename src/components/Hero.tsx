@@ -142,15 +142,43 @@ const Hero = () => {
 
           <div className="flex flex-col gap-10 items-center lg:items-start">
             {/* Social Icons */}
-            <div className="flex gap-4">
+            <div className="flex flex-wrap justify-center lg:justify-start gap-4">
               {[
-                { icon: <Github className="w-5 h-5" />, href: "https://github.com/monyphy25" },
-                { icon: <Facebook className="w-5 h-5" />, href: "https://www.facebook.com/share/1AmGdDt4fF/?mibextid=wwXIfr" },
-                { icon: <i className="fa-brands fa-tiktok text-xl"></i>, href: "https://www.tiktok.com/@phymuny" }
+                {
+                  icon: <Github className="w-5 h-5" />,
+                  href: "https://github.com/monyphy25",
+                  initial: { opacity: 0, x: 30 },
+                  delay: 0.6
+                },
+                {
+                  icon: <Facebook className="w-5 h-5" />,
+                  href: "https://www.facebook.com/share/1AmGdDt4fF/?mibextid=wwXIfr",
+                  initial: { opacity: 0, y: 30 },
+                  delay: 0.8
+                },
+                {
+                  icon: <i className="fa-brands fa-tiktok text-xl"></i>,
+                  href: "https://www.tiktok.com/@phymuny",
+                  initial: { opacity: 0, x: -30 },
+                  delay: 1.0
+                },
+                {
+                  icon: <i className="fa-brands fa-telegram text-xl"></i>,
+                  href: "https://t.me/phymony",
+                  initial: { opacity: 0, y: -30 },
+                  delay: 1.2
+                }
               ].map((social, i) => (
                 <motion.a
                   key={i}
                   href={social.href}
+                  initial={social.initial}
+                  animate={{ opacity: 1, x: 0, y: 0 }}
+                  transition={{
+                    duration: 1.5,
+                    ease: [0.16, 1, 0.3, 1],
+                    delay: social.delay
+                  }}
                   whileHover={{ scale: 1.1, y: -2 }}
                   className="w-12 h-12 bg-black/50 backdrop-blur-md border border-cyan-500/30 rounded-full flex items-center justify-center text-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.3)] transition-all hover:bg-cyan-500 hover:text-black hover:shadow-[0_0_25px_rgba(34,211,238,0.6)]"
                 >
@@ -163,16 +191,35 @@ const Hero = () => {
             <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
               <motion.a
                 href="#"
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ type: "spring", stiffness: 40, damping: 20, delay: 0.8 }}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold rounded-2xl transition-all shadow-[0_10px_20px_rgba(6,182,212,0.3)] flex items-center gap-2"
+                className="relative overflow-hidden px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold rounded-2xl transition-all shadow-[0_10px_20px_rgba(6,182,212,0.3)] flex items-center gap-2 group"
               >
-                <Download className="w-5 h-5" />
-                Download CV
+                {/* Shine effect */}
+                <motion.div
+                  animate={{
+                    left: ["-100%", "200%"],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    repeatDelay: 1
+                  }}
+                  className="absolute top-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 z-0"
+                />
+                <Download className="w-5 h-5 relative z-10" />
+                <span className="relative z-10">Download CV</span>
               </motion.a>
 
               <motion.a
                 href="#contact"
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ type: "spring", stiffness: 40, damping: 20, delay: 1 }}
                 whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.05)" }}
                 whileTap={{ scale: 0.95 }}
                 className="px-8 py-4 border border-foreground/20 text-foreground font-bold rounded-2xl transition-all backdrop-blur-sm flex items-center gap-2"

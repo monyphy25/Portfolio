@@ -12,25 +12,41 @@ const Contact = () => {
       icon: Mail,
       title: "Email",
       value: "mny207708@gmail.com",
+      link: "mailto:mny207708@gmail.com",
       color: "text-cyan-400",
       bg: "bg-cyan-500/10",
-      border: "group-hover:border-cyan-500/50"
-    },
-    {
-      icon: MapPin,
-      title: "Location",
-      value: "Cambodia, Phnom Penh",
-      color: "text-purple-400",
-      bg: "bg-purple-500/10",
-      border: "group-hover:border-purple-500/50"
+      border: "group-hover:border-cyan-500/50",
+      description: "Drop me a line anytime"
     },
     {
       icon: Phone,
       title: "Phone",
       value: "+855 96 268 2899",
+      link: "tel:+855962682899",
       color: "text-pink-400",
       bg: "bg-pink-500/10",
-      border: "group-hover:border-pink-500/50"
+      border: "group-hover:border-pink-500/50",
+      description: "Available for calls/WhatsApp"
+    },
+    {
+      icon: MapPin,
+      title: "Location",
+      value: "Cambodia, Phnom Penh",
+      link: "https://maps.google.com/?q=Phnom+Penh,Cambodia",
+      color: "text-purple-400",
+      bg: "bg-purple-500/10",
+      border: "group-hover:border-purple-500/50",
+      description: "Let's meet for coffee"
+    },
+    {
+      icon: () => <i className="fa-brands fa-telegram"></i>,
+      title: "Telegram",
+      value: "@phymony",
+      link: "https://t.me/phymony",
+      color: "text-blue-400",
+      bg: "bg-blue-500/10",
+      border: "group-hover:border-blue-500/50",
+      description: "Message me directly"
     }
   ];
 
@@ -78,32 +94,47 @@ const Contact = () => {
 
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Left Column: Contact Info Cards */}
-          <div className="space-y-6">
+          <div className="flex flex-col gap-5">
             {contactInfo.map((item, index) => (
-              <motion.div
+              <motion.a
                 key={index}
-                initial={{ opacity: 0, x: -50 }}
+                href={item.link}
+                target={item.title === "Location" ? "_blank" : undefined}
+                rel={item.title === "Location" ? "noopener noreferrer" : undefined}
+                initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.2, duration: 1.5, ease: "easeOut" }}
-                className={`group p-6 rounded-2xl bg-secondary/30 backdrop-blur-xl border border-white/10 ${item.border} hover:bg-secondary/50 transition-all duration-500 relative overflow-hidden shadow-lg hover:shadow-cyan-500/10 hover:-translate-y-1`}
+                transition={{
+                  delay: index * 0.2,
+                  duration: 1.5,
+                  ease: [0.16, 1, 0.3, 1]
+                }}
+                className={`group p-5 rounded-2xl bg-secondary/20 backdrop-blur-xl border border-white/5 ${item.border} hover:bg-secondary/40 transition-all duration-500 relative overflow-hidden shadow-2xl`}
               >
+                {/* Modern Hover Glow */}
                 <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-white/5 to-transparent`} />
-                <div className="absolute -right-8 -top-8 w-24 h-24 bg-white/5 rounded-full blur-2xl group-hover:bg-cyan-500/10 transition-colors" />
+                <div className="absolute -right-4 -top-4 w-32 h-32 bg-white/5 rounded-full blur-3xl group-hover:bg-cyan-500/10 transition-colors" />
 
-                <div className="flex items-center gap-6 relative z-10">
-                  <div className={`w-14 h-14 ${item.bg} rounded-xl flex items-center justify-center ${item.color} group-hover:scale-110 transition-transform duration-500 shadow-inner ring-1 ring-white/10`}>
+                <div className="flex items-center gap-5 relative z-10">
+                  <div className={`w-14 h-14 ${item.bg} rounded-xl flex items-center justify-center ${item.color} group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-inner ring-1 ring-white/10 flex-shrink-0`}>
                     <item.icon className="w-7 h-7" />
                   </div>
-                  <div>
-                    <h3 className="text-xs font-bold font-mono text-muted-foreground mb-1.5 uppercase tracking-widest">{item.title}</h3>
-                    <p className="text-lg font-bold text-foreground group-hover:text-white transition-colors break-all">{item.value}</p>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between mb-1">
+                      <h3 className="text-[10px] font-black font-mono text-muted-foreground uppercase tracking-[0.2em]">{item.title}</h3>
+                      <div className={`w-1.5 h-1.5 rounded-full ${item.color.replace('text-', 'bg-')} animate-pulse opacity-0 group-hover:opacity-100 transition-opacity`} />
+                    </div>
+                    <p className="text-lg font-bold text-foreground group-hover:text-white transition-colors">
+                      {item.value}
+                    </p>
+                    <p className="text-xs text-muted-foreground/60 font-medium mt-0.5">{item.description}</p>
                   </div>
                 </div>
-              </motion.div>
+
+                {/* Bottom Border Accent */}
+                <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent w-full transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
+              </motion.a>
             ))}
-
-
           </div>
 
           {/* Right Column: Form */}

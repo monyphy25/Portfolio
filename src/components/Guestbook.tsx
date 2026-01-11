@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, User, MessageSquare } from "lucide-react";
+import { supabase } from "../lib/supabase";
 
 // Interface for type safety
 interface Comment {
@@ -8,11 +9,8 @@ interface Comment {
     name: string;
     message: string;
     date: string;
-    timestamp?: number;
+    timestamp: number;
 }
-
-// Start with empty comments
-const initialComments: Comment[] = [];
 
 const timeAgo = (timestamp: number) => {
     const seconds = Math.floor((Date.now() - timestamp) / 1000);
@@ -26,57 +24,67 @@ const timeAgo = (timestamp: number) => {
 };
 
 const Guestbook = () => {
-    // Lazy initialization to load comments immediately from local storage
-    const [comments, setComments] = useState<Comment[]>(() => {
-        try {
-            const stored = localStorage.getItem('guestbookComments');
-            return stored ? JSON.parse(stored) : [];
-        } catch (error) {
-            console.error("Failed to load comments:", error);
-            return [];
-        }
-    });
-
+    const [comments, setComments] = useState<Comment[]>([]);
     const [name, setName] = useState("");
     const [message, setMessage] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [tick, setTick] = useState(0);
 
-    // State to force re-render every minute for time value updates
-    const [_, setTick] = useState(0);
+    // Fetch comments from Supabase
+    const fetchComments = async () => {
+        const { data, error } = await supabase
+            .from('guestbook')
+            .select('*')
+            .order('timestamp', { ascending: false });
 
-    // Removed the separate useEffect for loading since we do it in useState now
+        if (error) {
+            console.error("Error fetching comments:", error);
+        } else if (data) {
+            setComments(data);
+        }
+    };
 
-    // Update time every 30 seconds
+    // Load comments on mount
     useEffect(() => {
+        fetchComments();
+
+        // Update time every 30 seconds
         const timer = setInterval(() => {
             setTick(t => t + 1);
         }, 30000);
+
         return () => clearInterval(timer);
     }, []);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!name.trim() || !message.trim()) return;
 
         setIsSubmitting(true);
 
-        // Simulate network delay
-        setTimeout(() => {
-            const newComment = {
-                id: Date.now(),
-                name: name,
-                message: message,
-                date: "Just now", // Fallback
-                timestamp: Date.now(), // Store actual time
-            };
+        const newComment = {
+            name: name,
+            message: message,
+            date: "Just now",
+            timestamp: Date.now(),
+        };
 
-            const updatedComments = [newComment, ...comments];
-            setComments(updatedComments);
-            localStorage.setItem('guestbookComments', JSON.stringify(updatedComments));
+        // Insert into Supabase
+        const { error } = await supabase
+            .from('guestbook')
+            .insert([newComment]);
+
+        if (error) {
+            console.error("Error saving comment:", error);
+            alert("Failed to save comment. Please make sure your database is connected.");
+        } else {
+            // Refresh comments to show the new one
+            await fetchComments();
             setName("");
             setMessage("");
-            setIsSubmitting(false);
-        }, 800);
+        }
+
+        setIsSubmitting(false);
     };
 
     return (
