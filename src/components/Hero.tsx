@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { Github, Facebook, Download, Mail } from "lucide-react";
 import monyHero from "../assets/mony_no_bg.png";
-import cvFile from "../assets/mony.pdf";
+import cvFile from "../assets/mony_cv.pdf";
 
 
 const TextReveal = ({ text }: { text: string }) => {
