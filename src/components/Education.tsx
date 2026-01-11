@@ -42,29 +42,29 @@ const Education = () => {
                             viewport={{ once: true, amount: 0.2 }}
                             transition={{
                                 delay: index * 0.2,
-                                duration: 1.8,
+                                duration: 1.5,
                                 type: "spring",
                                 bounce: 0,
                                 stiffness: 40,
                                 damping: 15
                             }}
-                            className="group relative p-8 bg-white dark:bg-slate-900 border border-black/5 dark:border-white/10 rounded-2xl overflow-hidden hover:border-cyan-500/30 transition-colors duration-500 shadow-sm hover:shadow-cyan-500/5"
+                            className="group relative p-6 sm:p-8 bg-card/60 backdrop-blur-md border border-border rounded-2xl overflow-hidden hover:border-cyan-500/50 transition-all duration-500 shadow-lg hover:shadow-cyan-500/10"
                         >
                             <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                             <div className="relative z-10 flex flex-col sm:flex-row gap-6 items-start sm:items-center justify-between">
                                 <div className="flex gap-4 items-start">
-                                    <div className="w-12 h-12 rounded-xl bg-cyan-50 dark:bg-cyan-500/10 flex items-center justify-center text-cyan-600 dark:text-cyan-400 shrink-0">
+                                    <div className="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-500 shrink-0 border border-cyan-500/20 group-hover:border-cyan-500/50 transition-colors">
                                         <GraduationCap className="w-6 h-6" />
                                     </div>
                                     <div>
-                                        <h3 className="text-xl font-bold text-foreground mb-1">{edu.degree}</h3>
-                                        <p className="text-lg text-cyan-600 dark:text-cyan-400 font-medium mb-2">{edu.institution}</p>
-                                        <p className="text-sm text-muted-foreground">{edu.specialization}</p>
+                                        <h3 className="text-xl md:text-2xl font-bold text-foreground mb-1 group-hover:text-cyan-500 transition-colors duration-300">{edu.degree}</h3>
+                                        <p className="text-lg text-cyan-500 font-bold mb-2">{edu.institution}</p>
+                                        <p className="text-sm md:text-base text-muted-foreground font-medium leading-relaxed">{edu.specialization}</p>
                                     </div>
                                 </div>
-                                <div className="px-4 py-2 bg-black/5 dark:bg-white/5 rounded-full border border-black/5 dark:border-white/5">
-                                    <span className="text-sm font-mono font-bold text-foreground/80">{edu.period}</span>
+                                <div className="px-4 py-2 bg-muted/50 rounded-full border border-border whitespace-nowrap">
+                                    <span className="text-xs md:text-sm font-mono font-black text-cyan-500">{edu.period}</span>
                                 </div>
                             </div>
                         </motion.div>

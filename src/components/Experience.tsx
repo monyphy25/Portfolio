@@ -84,24 +84,26 @@ const Experience = () => {
                                 />
 
                                 {/* Content Card */}
-                                <div className={`ml-8 xs:ml-12 md:ml-0 md:w-[calc(50%-3rem)] p-5 xs:p-6 md:p-8 rounded-2xl bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm border border-black/5 dark:border-white/10 hover:border-cyan-500/30 transition-colors duration-300 shadow-sm hover:shadow-xl group ${index % 2 === 0 ? 'md:text-left' : 'md:text-right'}`}>
+                                <div className={`ml-10 xs:ml-12 md:ml-0 md:w-[calc(50%-3rem)] p-6 md:p-8 rounded-2xl bg-card/60 backdrop-blur-md border border-border hover:border-cyan-500/50 transition-all duration-300 shadow-lg hover:shadow-cyan-500/10 group ${index % 2 === 0 ? 'md:text-left' : 'md:text-right'}`}>
                                     <div className={`flex flex-col gap-2 mb-4 ${index % 2 === 0 ? 'md:items-start' : 'md:items-end'}`}>
-                                        <h3 className="text-xl font-bold text-foreground group-hover:text-cyan-500 transition-colors">{exp.role}</h3>
-                                        <div className="flex items-center gap-2 text-sm text-cyan-600 dark:text-cyan-400 font-medium">
+                                        <h3 className="text-xl md:text-2xl font-bold text-foreground group-hover:text-cyan-500 transition-colors duration-300 leading-tight">
+                                            {exp.role}
+                                        </h3>
+                                        <div className="flex items-center gap-2 text-sm md:text-base text-cyan-500 font-bold">
                                             <Briefcase className="w-4 h-4" />
                                             <span>{exp.company}</span>
                                         </div>
-                                        <div className="flex items-center gap-2 text-xs text-muted-foreground font-mono bg-black/5 dark:bg-white/5 px-2 py-1 rounded">
-                                            <Calendar className="w-3 h-3" />
+                                        <div className="inline-flex items-center gap-2 text-[11px] md:text-xs text-muted-foreground font-mono bg-muted/50 px-3 py-1 rounded-full border border-border w-fit">
+                                            <Calendar className="w-3.5 h-3.5 text-cyan-500/70" />
                                             <span>{exp.duration}</span>
                                         </div>
                                     </div>
-                                    <p className="text-muted-foreground mb-6 leading-relaxed text-sm">
+                                    <p className="text-foreground/80 mb-6 leading-relaxed text-sm md:text-base font-medium">
                                         {exp.description}
                                     </p>
                                     <div className={`flex flex-wrap gap-2 ${index % 2 === 0 ? 'justify-start' : 'justify-start md:justify-end'}`}>
                                         {exp.technologies.map((tech) => (
-                                            <span key={tech} className="px-2 py-1 text-[10px] font-medium uppercase tracking-wider bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 rounded border border-cyan-500/20">
+                                            <span key={tech} className="px-3 py-1 text-[10px] md:text-xs font-bold uppercase tracking-wider bg-cyan-500/10 text-cyan-500 rounded-full border border-cyan-500/20 group-hover:border-cyan-500/40 transition-colors">
                                                 {tech}
                                             </span>
                                         ))}
