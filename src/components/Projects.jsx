@@ -4,11 +4,11 @@ import ProjectCard from "./ProjectCard";
 import monyAbout from "../assets/mony_about.png";
 const projects = [
   {
-    title: "Savory Bites",
-    description: "A modern food delivery platform with real-time order tracking, curated restaurant listings, and seamless checkout experience. Built with focus on user experience and visual appeal.",
-    image: monyAbout,
-    tags: ["React", "Node.js", "MongoDB", "Stripe"],
-    liveUrl: "#",
+    title: "Confession",
+    description: "A personal, interactive web experience designed for a special proposal asking 'Will you be my girlfriend?'.",
+    image: "https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?q=80&w=400&h=300&auto=format&fit=crop",
+    tags: ["React", "Vite", "TailwindCSS"],
+    liveUrl: "https://confession-c41e.vercel.app/",
     githubUrl: "#",
   },
   {
