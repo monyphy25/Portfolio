@@ -138,7 +138,7 @@ const Hero = () => {
             transition={{ type: "spring", stiffness: 40, damping: 25, delay: 0.6 }}
             className="text-lg text-muted-foreground max-w-lg mb-10 leading-relaxed font-medium"
           >
-            I create exceptional digital experiences through innovative web development and stunning design solutions.
+            I am a Frontend Developer with a strong foundation in React.js and a passion for creating engaging and user-friendly interfaces.But now i don't have work experience.
           </motion.p>
 
           <div className="flex flex-col gap-10 items-center lg:items-start">

@@ -60,8 +60,19 @@ export default {
         'fade-in-up': 'fade-in-up 0.5s ease-out',
         'slide-in-right': 'slide-in-right 0.5s ease-out',
         'blob': 'blob 7s infinite',
+        'spotlight': 'spotlight 2s ease .75s 1 forwards',
       },
       keyframes: {
+        spotlight: {
+          '0%': {
+            opacity: 0,
+            transform: 'translate(-72%, -62%) scale(0.5)',
+          },
+          '100%': {
+            opacity: 1,
+            transform: 'translate(-50%, -40%) scale(1)',
+          },
+        },
         marquee: {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(calc(-50% - 1.5rem))' },

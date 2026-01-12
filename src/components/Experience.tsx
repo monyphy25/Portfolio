@@ -13,27 +13,27 @@ interface ExperienceItem {
 const experiences: ExperienceItem[] = [
     {
         id: 1,
-        role: "Senior Full-Stack Developer",
-        company: "TechNova Solutions",
+        role: " Computer Science Student ",
+        company: "Royal University of Phnom Penh",
         duration: "2023 - Present",
-        description: "Leading the development of scalable enterprise web applications. Improved system performance by 40% through code optimization and architectural refactoring.",
-        technologies: ["React", "Node.js", "AWS", "TypeScript"]
+        description: "Studying Computer Science at Royal University of Phnom Penh. ",
+        technologies: ["React", "Node.js", "TypeScript"]
     },
     {
         id: 2,
-        role: "Web Developer",
-        company: "Creative Pulse Agency",
-        duration: "2021 - 2023",
-        description: "Collaborated with designers to deliver high-fidelity UIs for diverse clients. Implemented accessible and responsive designs ensuring 100% cross-browser compatibility.",
-        technologies: ["Vue.js", "Tailwind CSS", "Firebase", "Figma"]
+        role: "Service ",
+        company: "Kai Zaab BKK",
+        duration: "2024 - 2025",
+        description: "Worked as a Service at Kai Zaab BKK. ",
+        technologies: ["Vue.js", "Tailwind CSS", "React"]
     },
     {
         id: 3,
-        role: "Junior Frontend Developer",
-        company: "StartUp Inc.",
-        duration: "2019 - 2021",
-        description: "Developed and maintained client-facing features. Assisted in migrating legacy codebase to modern React architecture.",
-        technologies: ["React", "JavaScript", "SASS", "Git"]
+        role: "Sale and Cashier",
+        company: "Rotha Pharmacy",
+        duration: "2024 - 2025",
+        description: "Worked as a Sale and Cashier at Rotha Pharmacy. ",
+        technologies: ["React", "JavaScript", "Git"]
     }
 ];
 
