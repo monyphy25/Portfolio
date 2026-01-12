@@ -116,10 +116,22 @@ const Guestbook = () => {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 1.5, ease: "easeOut", delay: 0.3 }}
-                        className="text-muted-foreground max-w-lg mx-auto"
+                        className="text-muted-foreground max-w-lg mx-auto mb-6"
                     >
                         Drop a comment, feedback, or just say hello! Your message will appear below instanty.
                     </motion.p>
+
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5, delay: 0.5 }}
+                        className="inline-flex items-center gap-2 bg-secondary/50 backdrop-blur-sm px-4 py-2 rounded-full border border-white/5"
+                    >
+                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                        <span className="text-sm font-medium text-foreground/80">
+                            {comments.length} {comments.length === 1 ? 'Comment' : 'Comments'} so far
+                        </span>
+                    </motion.div>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-10">
