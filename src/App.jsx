@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -27,6 +29,13 @@ const Index = () => {
       document.documentElement.classList.remove("light");
     }
   }, [isLight]);
+
+  useEffect(() => {
+    AOS.init({
+      once: false,
+      mirror: false,
+    });
+  }, []);
 
   return (
     <AnimatePresence mode="wait">

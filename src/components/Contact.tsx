@@ -96,20 +96,15 @@ const Contact = () => {
           {/* Left Column: Contact Info Cards */}
           <div className="flex flex-col gap-5">
             {contactInfo.map((item, index) => (
-              <motion.a
+              <a
                 key={index}
                 href={item.link}
                 target={item.title === "Location" ? "_blank" : undefined}
                 rel={item.title === "Location" ? "noopener noreferrer" : undefined}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{
-                  delay: index * 0.2,
-                  duration: 1.5,
-                  ease: [0.16, 1, 0.3, 1]
-                }}
                 className={`group p-5 rounded-2xl bg-secondary/20 backdrop-blur-xl border border-white/5 ${item.border} hover:bg-secondary/40 transition-all duration-500 relative overflow-hidden shadow-2xl`}
+                data-aos={item.title === "Phone" || item.title === "Telegram" ? "fade-left" : "fade-right"}
+                data-aos-offset="300"
+                data-aos-easing="ease-in-sine"
               >
                 {/* Modern Hover Glow */}
                 <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-white/5 to-transparent`} />
@@ -133,7 +128,7 @@ const Contact = () => {
 
                 {/* Bottom Border Accent */}
                 <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent w-full transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
-              </motion.a>
+              </a>
             ))}
           </div>
 
@@ -197,24 +192,18 @@ const Contact = () => {
                 ></textarea>
               </div>
 
-              <motion.button
-                initial={{ opacity: 0, x: -60 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{
-                  type: "spring",
-                  stiffness: 40,
-                  damping: 20,
-                  delay: 0.6
-                }}
+              <button
                 type="submit"
                 className="w-full group relative px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold rounded-xl overflow-hidden shadow-lg shadow-cyan-500/25 transition-all hover:shadow-cyan-500/40 hover:scale-[1.02]"
+                data-aos="fade-right"
+                data-aos-offset="300"
+                data-aos-easing="ease-in-sine"
               >
                 <div className="absolute inset-0 bg-white/20 group-hover:translate-x-full transition-transform duration-500 ease-in-out -skew-x-12" />
                 <span className="relative flex items-center justify-center gap-2">
                   Send Message <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </span>
-              </motion.button>
+              </button>
             </form>
           </motion.div>
         </div>

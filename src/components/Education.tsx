@@ -11,13 +11,13 @@ const educationData = [
         specialization: "Studying Computer Science at Royal University of Phnom Penh."
     },
     {
-        degree: "Bachelor Degree",
+        degree: "Finished High School",
         institution: "Kruch Chmar High School",
         period: "2020 - 2023",
-        specialization: "Good at Math and Physics"
+        specialization: "Good at Khmer and Physics"
     },
     {
-        degree: "Primary School Diploma",
+        degree: "Finished Primary School",
         institution: "Kruch Chmar High School",
         period: "2017 - 2020",
         specialization: "Good at Physics and Chemistry"
@@ -44,16 +44,8 @@ const Education = () => {
 
                 <div className="grid gap-6">
                     {educationData.map((edu, index) => (
-                        <motion.div
+                        <div
                             key={index}
-                            initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true, amount: 0.3, margin: "0px 0px -300px 0px" }}
-                            transition={{
-                                delay: index * 0.2,
-                                duration: 0.8,
-                                ease: [0.47, 0, 0.745, 0.715] // approximate ease-in-sine
-                            }}
                             className="group relative p-6 sm:p-8 bg-card/60 backdrop-blur-xl border border-border rounded-3xl overflow-hidden hover:border-cyan-500/50 transition-all duration-500 shadow-2xl hover:shadow-cyan-500/20"
                             data-aos={index % 2 === 0 ? "fade-right" : "fade-left"}
                             data-aos-offset="300"
@@ -90,7 +82,7 @@ const Education = () => {
                                     <span className="text-xs md:text-sm font-mono font-black text-cyan-500 tracking-widest">{edu.period}</span>
                                 </div>
                             </div>
-                        </motion.div>
+                        </div>
                     ))}
                 </div>
             </div>
