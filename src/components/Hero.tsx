@@ -198,6 +198,9 @@ const Hero = () => {
                 transition={{ type: "spring", stiffness: 40, damping: 20, delay: 0.8 }}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                data-aos="fade-left"
+                data-aos-offset="300"
+                data-aos-easing="ease-in-sine"
                 className="relative overflow-hidden px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold rounded-2xl transition-all shadow-[0_10px_20px_rgba(6,182,212,0.3)] flex items-center gap-2 group"
               >
                 {/* Shine effect */}
@@ -224,10 +227,26 @@ const Hero = () => {
                 transition={{ type: "spring", stiffness: 40, damping: 20, delay: 1 }}
                 whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.05)" }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 border border-foreground/20 text-foreground font-bold rounded-2xl transition-all backdrop-blur-sm flex items-center gap-2"
+                data-aos="fade-right"
+                data-aos-offset="300"
+                data-aos-easing="ease-in-sine"
+                className="relative overflow-hidden px-8 py-4 border border-foreground/20 text-foreground font-bold rounded-2xl transition-all backdrop-blur-sm flex items-center gap-2"
               >
-                <Mail className="w-5 h-5" />
-                Contact Me
+                {/* Shine effect */}
+                <motion.div
+                  animate={{
+                    left: ["-100%", "200%"],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    repeatDelay: 1
+                  }}
+                  className="absolute top-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 z-0"
+                />
+                <Mail className="w-5 h-5 relative z-10" />
+                <span className="relative z-10">Contact Me</span>
               </motion.a>
             </div>
           </div>

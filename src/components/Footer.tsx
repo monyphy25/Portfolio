@@ -1,38 +1,168 @@
 import { useState, useEffect } from "react";
 import { Github, Mail, MapPin, Phone, ChevronUp, ExternalLink, Facebook, Heart, ThumbsUp } from "lucide-react";
 import { motion } from "framer-motion";
+import { supabase } from "@/lib/supabase";
 
 const Footer = () => {
   const [likes, setLikes] = useState(0);
   const [hearts, setHearts] = useState(0);
   const [hasVoted, setHasVoted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const storedLikes = localStorage.getItem("portfolio_likes_v2");
-    const storedHearts = localStorage.getItem("portfolio_hearts_v2");
-    const userHasVoted = localStorage.getItem("portfolio_has_voted_v2");
-
-    setLikes(storedLikes ? parseInt(storedLikes) : 0);
-    setHearts(storedHearts ? parseInt(storedHearts) : 0);
-    setHasVoted(!!userHasVoted);
-  }, []);
-
-  const handleLike = () => {
-    if (hasVoted) return;
-    const newLikes = likes + 1;
-    setLikes(newLikes);
-    setHasVoted(true);
-    localStorage.setItem("portfolio_likes_v2", newLikes.toString());
-    localStorage.setItem("portfolio_has_voted_v2", "true");
+  // Generate a unique user identifier (stored in localStorage)
+  const getUserIdentifier = () => {
+    let userId = localStorage.getItem("portfolio_user_id");
+    if (!userId) {
+      userId = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      localStorage.setItem("portfolio_user_id", userId);
+    }
+    return userId;
   };
 
-  const handleHeart = () => {
-    if (hasVoted) return;
-    const newHearts = hearts + 1;
-    setHearts(newHearts);
-    setHasVoted(true);
-    localStorage.setItem("portfolio_hearts_v2", newHearts.toString());
-    localStorage.setItem("portfolio_has_voted_v2", "true");
+  // Fetch current reactions from database
+  const fetchReactions = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("portfolio_reactions")
+        .select("likes, hearts")
+        .eq("id", "00000000-0000-0000-0000-000000000001")
+        .single();
+
+      if (error) throw error;
+
+      if (data) {
+        setLikes(data.likes || 0);
+        setHearts(data.hearts || 0);
+      }
+    } catch (error) {
+      console.error("Error fetching reactions:", error);
+      // Fallback to localStorage if database fails
+      const storedLikes = localStorage.getItem("portfolio_likes_v2");
+      const storedHearts = localStorage.getItem("portfolio_hearts_v2");
+      setLikes(storedLikes ? parseInt(storedLikes) : 0);
+      setHearts(storedHearts ? parseInt(storedHearts) : 0);
+    }
+  };
+
+  // Check if user has already voted
+  const checkUserVote = async () => {
+    const userId = getUserIdentifier();
+    try {
+      const { data, error } = await supabase
+        .from("user_votes")
+        .select("vote_type")
+        .eq("user_identifier", userId)
+        .single();
+
+      if (data) {
+        setHasVoted(true);
+      } else {
+        setHasVoted(false);
+      }
+    } catch (error) {
+      // User hasn't voted yet
+      setHasVoted(false);
+    }
+  };
+
+  useEffect(() => {
+    const initializeReactions = async () => {
+      setIsLoading(true);
+      await fetchReactions();
+      await checkUserVote();
+      setIsLoading(false);
+    };
+
+    initializeReactions();
+
+    // Set up real-time subscription for reactions
+    const reactionSubscription = supabase
+      .channel("portfolio_reactions_changes")
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "portfolio_reactions",
+        },
+        (payload: any) => {
+          if (payload.new) {
+            setLikes(payload.new.likes || 0);
+            setHearts(payload.new.hearts || 0);
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      reactionSubscription.unsubscribe();
+    };
+  }, []);
+
+  const handleLike = async () => {
+    if (hasVoted || isLoading) return;
+
+    const userId = getUserIdentifier();
+    try {
+      // Record the user's vote
+      const { error: voteError } = await supabase
+        .from("user_votes")
+        .insert([{ user_identifier: userId, vote_type: "like" }]);
+
+      if (voteError) throw voteError;
+
+      // Increment likes count
+      const { error: updateError } = await supabase
+        .from("portfolio_reactions")
+        .update({ likes: likes + 1 })
+        .eq("id", "00000000-0000-0000-0000-000000000001");
+
+      if (updateError) throw updateError;
+
+      setHasVoted(true);
+      setLikes(likes + 1);
+    } catch (error) {
+      console.error("Error recording like:", error);
+      // Fallback to localStorage
+      const newLikes = likes + 1;
+      setLikes(newLikes);
+      setHasVoted(true);
+      localStorage.setItem("portfolio_likes_v2", newLikes.toString());
+      localStorage.setItem("portfolio_has_voted_v2", "true");
+    }
+  };
+
+  const handleHeart = async () => {
+    if (hasVoted || isLoading) return;
+
+    const userId = getUserIdentifier();
+    try {
+      // Record the user's vote
+      const { error: voteError } = await supabase
+        .from("user_votes")
+        .insert([{ user_identifier: userId, vote_type: "heart" }]);
+
+      if (voteError) throw voteError;
+
+      // Increment hearts count
+      const { error: updateError } = await supabase
+        .from("portfolio_reactions")
+        .update({ hearts: hearts + 1 })
+        .eq("id", "00000000-0000-0000-0000-000000000001");
+
+      if (updateError) throw updateError;
+
+      setHasVoted(true);
+      setHearts(hearts + 1);
+    } catch (error) {
+      console.error("Error recording heart:", error);
+      // Fallback to localStorage
+      const newHearts = hearts + 1;
+      setHearts(newHearts);
+      setHasVoted(true);
+      localStorage.setItem("portfolio_hearts_v2", newHearts.toString());
+      localStorage.setItem("portfolio_has_voted_v2", "true");
+    }
   };
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -209,8 +339,8 @@ const Footer = () => {
                   disabled={hasVoted}
                   title={hasVoted ? "You have already voted" : "Like this portfolio"}
                   className={`group relative flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-500 ${hasVoted
-                      ? 'bg-transparent border-transparent opacity-50 cursor-not-allowed grayscale'
-                      : 'bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border-cyan-500/20 hover:border-cyan-500/50 hover:from-cyan-500/20 hover:to-blue-500/20 hover:shadow-[0_0_20px_rgba(6,182,212,0.15)] hover:scale-105 active:scale-95'
+                    ? 'bg-transparent border-transparent opacity-50 cursor-not-allowed grayscale'
+                    : 'bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border-cyan-500/20 hover:border-cyan-500/50 hover:from-cyan-500/20 hover:to-blue-500/20 hover:shadow-[0_0_20px_rgba(6,182,212,0.15)] hover:scale-105 active:scale-95'
                     }`}
                 >
                   <ThumbsUp className={`w-4 h-4 transition-all duration-500 ${!hasVoted && 'group-hover:text-cyan-400 group-hover:-translate-y-0.5 group-hover:rotate-[-12deg]'}`} />
@@ -224,8 +354,8 @@ const Footer = () => {
                   disabled={hasVoted}
                   title={hasVoted ? "You have already voted" : "Love this portfolio"}
                   className={`group relative flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-500 ${hasVoted
-                      ? 'bg-transparent border-transparent opacity-50 cursor-not-allowed grayscale'
-                      : 'bg-gradient-to-br from-pink-500/10 to-rose-500/10 border-pink-500/20 hover:border-pink-500/50 hover:from-pink-500/20 hover:to-rose-500/20 hover:shadow-[0_0_20px_rgba(236,72,153,0.15)] hover:scale-105 active:scale-95'
+                    ? 'bg-transparent border-transparent opacity-50 cursor-not-allowed grayscale'
+                    : 'bg-gradient-to-br from-pink-500/10 to-rose-500/10 border-pink-500/20 hover:border-pink-500/50 hover:from-pink-500/20 hover:to-rose-500/20 hover:shadow-[0_0_20px_rgba(236,72,153,0.15)] hover:scale-105 active:scale-95'
                     }`}
                 >
                   <Heart className={`w-4 h-4 transition-all duration-500 ${!hasVoted && 'group-hover:text-pink-400 group-hover:-translate-y-0.5 group-hover:rotate-12 group-hover:fill-pink-400/20'}`} />

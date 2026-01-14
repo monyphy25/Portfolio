@@ -71,6 +71,23 @@ const ProjectCard = ({ title, description, image, tags, liveUrl, githubUrl, inde
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
 
+          {/* Shine effect for box2 and box3 (index 1 and 2) */}
+          {(index === 1 || index === 2) && (
+            <motion.div
+              animate={{
+                left: ["-100%", "200%"],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+                repeatDelay: 1,
+                delay: index * 0.5 // Offset the animation for each card
+              }}
+              className="absolute top-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 z-10"
+            />
+          )}
+
           <div className="absolute top-4 right-4 flex gap-2">
             {tags.slice(0, 2).map((tag) => (
               <span key={tag} className="px-3 py-1 text-[10px] font-bold uppercase tracking-widest bg-black/50 backdrop-blur-md text-white border border-white/10 rounded-lg">
