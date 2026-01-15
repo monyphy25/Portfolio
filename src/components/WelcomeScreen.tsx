@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { Play } from "lucide-react";
 import monyWelcome from "../assets/mony_welcome.png";
 
 interface WelcomeScreenProps {
@@ -138,7 +138,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
                                 {/* Hover Gradient Fill */}
                                 <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                                <ArrowRight className="w-8 h-8 text-cyan-400 group-hover:text-white group-hover:translate-x-1 transition-all duration-300" />
+                                <Play className="w-8 h-8 text-cyan-400 group-hover:text-white group-hover:scale-110 transition-all duration-300 fill-cyan-400 group-hover:fill-white" />
                             </div>
                         </motion.button>
 

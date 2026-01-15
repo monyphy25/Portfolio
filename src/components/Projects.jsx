@@ -2,6 +2,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import ProjectCard from "./ProjectCard";
 import monyAbout from "../assets/mony_about.png";
+import rockPaperGame from "../assets/rock_paper_game.png";
 const projects = [
   {
     title: "Confession",
@@ -22,7 +23,7 @@ const projects = [
   {
     title: "Rock Paper Scissors",
     description: "An interactive Rock Paper Scissors game with engaging animations, score tracking, and a responsive design for all devices.",
-    image: "https://images.unsplash.com/photo-1614680376593-902f74cf0d41?q=80&w=400&h=300&auto=format&fit=crop",
+    image: rockPaperGame,
     tags: ["React", "TypeScript", "CSS"],
     liveUrl: "https://rock-paper-game-d58p.vercel.app/",
     githubUrl: "#",

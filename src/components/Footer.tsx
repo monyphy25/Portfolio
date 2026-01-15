@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import { Github, Mail, MapPin, Phone, ChevronUp, ExternalLink, Facebook, Heart, ThumbsUp } from "lucide-react";
+import { Github, Mail, MapPin, Phone, ChevronUp, ExternalLink, Facebook } from "lucide-react";
 import { motion } from "framer-motion";
 import { supabase } from "@/lib/supabase";
 
 const Footer = () => {
-  const [likes, setLikes] = useState(0);
-  const [hearts, setHearts] = useState(0);
+  const [reactions, setReactions] = useState(0);
   const [hasVoted, setHasVoted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -24,23 +23,20 @@ const Footer = () => {
     try {
       const { data, error } = await supabase
         .from("portfolio_reactions")
-        .select("likes, hearts")
+        .select("reactions")
         .eq("id", "00000000-0000-0000-0000-000000000001")
         .single();
 
       if (error) throw error;
 
       if (data) {
-        setLikes(data.likes || 0);
-        setHearts(data.hearts || 0);
+        setReactions(data.reactions || 0);
       }
     } catch (error) {
       console.error("Error fetching reactions:", error);
       // Fallback to localStorage if database fails
-      const storedLikes = localStorage.getItem("portfolio_likes_v2");
-      const storedHearts = localStorage.getItem("portfolio_hearts_v2");
-      setLikes(storedLikes ? parseInt(storedLikes) : 0);
-      setHearts(storedHearts ? parseInt(storedHearts) : 0);
+      const storedReactions = localStorage.getItem("portfolio_reactions_v3");
+      setReactions(storedReactions ? parseInt(storedReactions) : 0);
     }
   };
 
@@ -87,8 +83,7 @@ const Footer = () => {
         },
         (payload: any) => {
           if (payload.new) {
-            setLikes(payload.new.likes || 0);
-            setHearts(payload.new.hearts || 0);
+            setReactions(payload.new.reactions || 0);
           }
         }
       )
@@ -99,7 +94,7 @@ const Footer = () => {
     };
   }, []);
 
-  const handleLike = async () => {
+  const handleReaction = async () => {
     if (hasVoted || isLoading) return;
 
     const userId = getUserIdentifier();
@@ -107,61 +102,28 @@ const Footer = () => {
       // Record the user's vote
       const { error: voteError } = await supabase
         .from("user_votes")
-        .insert([{ user_identifier: userId, vote_type: "like" }]);
+        .insert([{ user_identifier: userId, vote_type: "reaction" }]);
 
       if (voteError) throw voteError;
 
-      // Increment likes count
+      // Increment reactions count
       const { error: updateError } = await supabase
         .from("portfolio_reactions")
-        .update({ likes: likes + 1 })
+        .update({ reactions: reactions + 1 })
         .eq("id", "00000000-0000-0000-0000-000000000001");
 
       if (updateError) throw updateError;
 
       setHasVoted(true);
-      setLikes(likes + 1);
+      setReactions(reactions + 1);
     } catch (error) {
-      console.error("Error recording like:", error);
+      console.error("Error recording reaction:", error);
       // Fallback to localStorage
-      const newLikes = likes + 1;
-      setLikes(newLikes);
+      const newReactions = reactions + 1;
+      setReactions(newReactions);
       setHasVoted(true);
-      localStorage.setItem("portfolio_likes_v2", newLikes.toString());
-      localStorage.setItem("portfolio_has_voted_v2", "true");
-    }
-  };
-
-  const handleHeart = async () => {
-    if (hasVoted || isLoading) return;
-
-    const userId = getUserIdentifier();
-    try {
-      // Record the user's vote
-      const { error: voteError } = await supabase
-        .from("user_votes")
-        .insert([{ user_identifier: userId, vote_type: "heart" }]);
-
-      if (voteError) throw voteError;
-
-      // Increment hearts count
-      const { error: updateError } = await supabase
-        .from("portfolio_reactions")
-        .update({ hearts: hearts + 1 })
-        .eq("id", "00000000-0000-0000-0000-000000000001");
-
-      if (updateError) throw updateError;
-
-      setHasVoted(true);
-      setHearts(hearts + 1);
-    } catch (error) {
-      console.error("Error recording heart:", error);
-      // Fallback to localStorage
-      const newHearts = hearts + 1;
-      setHearts(newHearts);
-      setHasVoted(true);
-      localStorage.setItem("portfolio_hearts_v2", newHearts.toString());
-      localStorage.setItem("portfolio_has_voted_v2", "true");
+      localStorage.setItem("portfolio_reactions_v3", newReactions.toString());
+      localStorage.setItem("portfolio_has_voted_v3", "true");
     }
   };
   const scrollToTop = () => {
@@ -329,50 +291,6 @@ const Footer = () => {
           </div>
 
           <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
-            <div className="flex flex-col items-center gap-3 pr-6 md:border-r md:border-border/50 relative group/react-zone">
-              {/* Cool Glow Effect behind */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-cyan-500/10 blur-2xl rounded-full opacity-0 group-hover/react-zone:opacity-100 transition-opacity duration-700 pointer-events-none" />
-
-              <div className="flex items-center gap-3 bg-secondary/10 backdrop-blur-sm p-1.5 rounded-full border border-white/5 relative z-10 shadow-lg shadow-black/20 hover:border-cyan-500/20 transition-colors duration-500">
-                <button
-                  onClick={handleLike}
-                  disabled={hasVoted}
-                  title={hasVoted ? "You have already voted" : "Like this portfolio"}
-                  className={`group relative flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-500 ${hasVoted
-                    ? 'bg-transparent border-transparent opacity-50 cursor-not-allowed grayscale'
-                    : 'bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border-cyan-500/20 hover:border-cyan-500/50 hover:from-cyan-500/20 hover:to-blue-500/20 hover:shadow-[0_0_20px_rgba(6,182,212,0.15)] hover:scale-105 active:scale-95'
-                    }`}
-                >
-                  <ThumbsUp className={`w-4 h-4 transition-all duration-500 ${!hasVoted && 'group-hover:text-cyan-400 group-hover:-translate-y-0.5 group-hover:rotate-[-12deg]'}`} />
-                  <span className={`text-xs font-bold font-mono transition-colors duration-300 ${!hasVoted ? 'text-muted-foreground group-hover:text-cyan-400' : 'text-muted-foreground'}`}>{likes}</span>
-                </button>
-
-                <div className="w-px h-6 bg-white/10" /> {/* Divider between buttons */}
-
-                <button
-                  onClick={handleHeart}
-                  disabled={hasVoted}
-                  title={hasVoted ? "You have already voted" : "Love this portfolio"}
-                  className={`group relative flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-500 ${hasVoted
-                    ? 'bg-transparent border-transparent opacity-50 cursor-not-allowed grayscale'
-                    : 'bg-gradient-to-br from-pink-500/10 to-rose-500/10 border-pink-500/20 hover:border-pink-500/50 hover:from-pink-500/20 hover:to-rose-500/20 hover:shadow-[0_0_20px_rgba(236,72,153,0.15)] hover:scale-105 active:scale-95'
-                    }`}
-                >
-                  <Heart className={`w-4 h-4 transition-all duration-500 ${!hasVoted && 'group-hover:text-pink-400 group-hover:-translate-y-0.5 group-hover:rotate-12 group-hover:fill-pink-400/20'}`} />
-                  <span className={`text-xs font-bold font-mono transition-colors duration-300 ${!hasVoted ? 'text-muted-foreground group-hover:text-pink-400' : 'text-muted-foreground'}`}>{hearts}</span>
-                </button>
-              </div>
-
-              <div className="flex items-center gap-2 relative z-10">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-cyan-500"></span>
-                </span>
-                <span className="text-[10px] font-black bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 italic tracking-widest uppercase drop-shadow-sm">
-                  Only one react
-                </span>
-              </div>
-            </div>
 
             <p className="text-muted-foreground text-sm text-center md:text-right font-medium tracking-wide">
               © {currentYear} <span className="text-cyan-400 font-bold">Portfolio</span>. All rights reserved.

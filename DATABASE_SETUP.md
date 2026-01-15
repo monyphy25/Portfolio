@@ -1,6 +1,6 @@
-# Database Setup for Like and Heart Feature
+# Database Setup for Reaction Feature
 
-This guide will help you set up the Supabase database to store Like and Heart reactions for your portfolio.
+This guide will help you set up the Supabase database to store reactions for your portfolio.
 
 ## Prerequisites
 
@@ -27,17 +27,16 @@ This guide will help you set up the Supabase database to store Like and Heart re
 The script will create:
 
 #### Tables:
-- **`portfolio_reactions`** - Stores the total count of likes and hearts
+- **`portfolio_reactions`** - Stores the total count of reactions
   - `id` (UUID) - Primary key
-  - `likes` (INTEGER) - Total number of likes
-  - `hearts` (INTEGER) - Total number of hearts
+  - `reactions` (INTEGER) - Total number of reactions
   - `created_at` (TIMESTAMP) - When the record was created
   - `updated_at` (TIMESTAMP) - When the record was last updated
 
 - **`user_votes`** - Tracks which users have voted to prevent duplicates
   - `id` (UUID) - Primary key
   - `user_identifier` (TEXT) - Unique identifier for each user
-  - `vote_type` (TEXT) - Either 'like' or 'heart'
+  - `vote_type` (TEXT) - 'reaction'
   - `created_at` (TIMESTAMP) - When the vote was recorded
 
 #### Security:
@@ -53,7 +52,7 @@ After running the script, verify the tables were created:
 2. You should see two new tables:
    - `portfolio_reactions`
    - `user_votes`
-3. Click on `portfolio_reactions` - you should see one row with `likes: 0` and `hearts: 0`
+3. Click on `portfolio_reactions` - you should see one row with `reactions: 0`
 
 ### 5. Test the Feature
 
@@ -68,9 +67,9 @@ After running the script, verify the tables were created:
    npm run dev
    ```
 
-3. Scroll to the footer and test the Like and Heart buttons
-4. The counts should persist across page refreshes
-5. Open the site in a different browser - you should see the same counts
+3. Scroll to the footer and test the Reaction button
+4. The count should persist across page refreshes
+5. Open the site in a different browser - you should see the same count
 6. Try clicking again - you should be prevented from voting twice
 
 ## How It Works
@@ -81,7 +80,7 @@ After running the script, verify the tables were created:
 - Format: `user_[timestamp]_[random_string]`
 
 ### Vote Process
-1. User clicks Like or Heart button
+1. User clicks the Reaction button
 2. System checks if user has already voted (queries `user_votes` table)
 3. If not voted:
    - Records the vote in `user_votes` table
@@ -146,10 +145,10 @@ SELECT * FROM portfolio_reactions;
 SELECT * FROM user_votes ORDER BY created_at DESC;
 ```
 
-### Reset Counts (for testing)
+### Reset Count (for testing)
 ```sql
 UPDATE portfolio_reactions 
-SET likes = 0, hearts = 0 
+SET reactions = 0 
 WHERE id = '00000000-0000-0000-0000-000000000001';
 ```
 
@@ -174,7 +173,7 @@ After setting up the database, you can:
 - Monitor votes in the Supabase dashboard
 - Add analytics to track voting patterns
 - Export data for analysis
-- Add more reaction types (e.g., fire, clap, etc.)
+- Add more reaction types if needed
 - Implement vote removal/change functionality
 
 ---

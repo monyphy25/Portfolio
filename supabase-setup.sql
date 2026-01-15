@@ -1,8 +1,7 @@
--- Create table for storing portfolio reactions (likes and hearts)
+-- Create table for storing portfolio reactions
 CREATE TABLE IF NOT EXISTS portfolio_reactions (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  likes INTEGER DEFAULT 0 NOT NULL,
-  hearts INTEGER DEFAULT 0 NOT NULL,
+  reactions INTEGER DEFAULT 0 NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
@@ -11,13 +10,13 @@ CREATE TABLE IF NOT EXISTS portfolio_reactions (
 CREATE TABLE IF NOT EXISTS user_votes (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   user_identifier TEXT NOT NULL UNIQUE,
-  vote_type TEXT NOT NULL CHECK (vote_type IN ('like', 'heart')),
+  vote_type TEXT NOT NULL CHECK (vote_type IN ('reaction')),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
 -- Insert initial row for reactions if it doesn't exist
-INSERT INTO portfolio_reactions (id, likes, hearts)
-VALUES ('00000000-0000-0000-0000-000000000001', 0, 0)
+INSERT INTO portfolio_reactions (id, reactions)
+VALUES ('00000000-0000-0000-0000-000000000001', 0)
 ON CONFLICT (id) DO NOTHING;
 
 -- Enable Row Level Security (RLS)
