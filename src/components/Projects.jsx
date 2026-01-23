@@ -91,14 +91,24 @@ const Projects = () => {
                 </div>
               );
             }
+            if (index === 1) {
+              return (
+                <div
+                  key={project.title}
+                  data-aos="fade-up"
+                  data-aos-anchor-placement="top-bottom"
+                >
+                  <ProjectCard {...project} index={index} />
+                </div>
+              );
+            }
             if (index === 2) {
               return (
                 <div
                   key={project.title}
                   data-aos="fade-left"
-                  data-aos-anchor="#example-anchor"
-                  data-aos-offset="500"
-                  data-aos-duration="500"
+                  data-aos-offset="300"
+                  data-aos-easing="ease-in-sine"
                 >
                   <ProjectCard {...project} index={index} />
                 </div>
