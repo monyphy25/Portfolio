@@ -78,9 +78,34 @@ const Projects = () => {
           whileInView="show"
           viewport={{ once: true, margin: "-50px" }}
         >
-          {projects.map((project, index) => (
-            <ProjectCard key={project.title} {...project} index={index} />
-          ))}
+          {projects.map((project, index) => {
+            if (index === 0) {
+              return (
+                <div
+                  key={project.title}
+                  data-aos="fade-right"
+                  data-aos-offset="300"
+                  data-aos-easing="ease-in-sine"
+                >
+                  <ProjectCard {...project} index={index} />
+                </div>
+              );
+            }
+            if (index === 2) {
+              return (
+                <div
+                  key={project.title}
+                  data-aos="fade-left"
+                  data-aos-anchor="#example-anchor"
+                  data-aos-offset="500"
+                  data-aos-duration="500"
+                >
+                  <ProjectCard {...project} index={index} />
+                </div>
+              );
+            }
+            return <ProjectCard key={project.title} {...project} index={index} />;
+          })}
         </motion.div>
 
       </div>

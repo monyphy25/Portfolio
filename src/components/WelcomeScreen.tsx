@@ -143,14 +143,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
                         </motion.button>
 
                         {/* Text Label Fade In */}
-                        <motion.span
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.5 }}
-                            className="absolute -bottom-10 left-1/2 -translate-x-1/2 text-xs font-mono text-cyan-500/60 tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap"
-                        >
-                            Enter
-                        </motion.span>
+
                     </motion.div>
                 )}
             </div>
