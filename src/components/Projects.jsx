@@ -1,7 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import ProjectCard from "./ProjectCard";
-import monyAbout from "../assets/mony_about.png";
+
 import rockPaperGame from "../assets/rock_paper_game.png";
 const projects = [
   {

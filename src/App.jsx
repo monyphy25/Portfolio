@@ -37,6 +37,41 @@ const Index = () => {
     });
   }, []);
 
+
+  const [starField, setStarField] = useState({ far: [], mid: [], shooting: [], dust: [] });
+
+  useEffect(() => {
+    setStarField({
+      far: [...Array(80)].map((_, i) => ({
+        key: `star-far-${i}`,
+        top: `${Math.random() * 100}%`,
+        left: `${Math.random() * 100}%`,
+        duration: 3 + Math.random() * 2,
+        delay: Math.random() * 5,
+      })),
+      mid: [...Array(40)].map((_, i) => ({
+        key: `star-mid-${i}`,
+        top: `${Math.random() * 100}%`,
+        left: `${Math.random() * 100}%`,
+        duration: 2 + Math.random() * 2,
+        delay: Math.random() * 3,
+      })),
+      shooting: [...Array(3)].map((_, i) => ({
+        key: `shooting-star-${i}`,
+        top: `${Math.random() * 50}%`,
+        left: `${Math.random() * 50}%`,
+        repeatDelay: 5 + Math.random() * 15,
+        delay: i * 7,
+      })),
+      dust: [...Array(10)].map((_, i) => ({
+        key: `dust-${i}`,
+        top: `${Math.random() * 100}%`,
+        left: `${Math.random() * 100}%`,
+        duration: 20 + Math.random() * 20,
+      })),
+    });
+  }, []);
+
   return (
     <AnimatePresence mode="wait">
       {showWelcome ? (
@@ -57,42 +92,44 @@ const Index = () => {
               {/* Star Field Layers */}
               <div className="absolute inset-0 overflow-hidden">
                 {/* Background Stars (Far) */}
-                {[...Array(80)].map((_, i) => (
+                {/* Background Stars (Far) */}
+                {starField.far.map((star) => (
                   <motion.div
-                    key={`star-far-${i}`}
+                    key={star.key}
                     className="absolute w-[1px] h-[1px] bg-white/40 rounded-full"
                     style={{
-                      top: `${Math.random() * 100}%`,
-                      left: `${Math.random() * 100}%`,
+                      top: star.top,
+                      left: star.left,
                     }}
                     animate={{
                       opacity: [0.1, 0.4, 0.1],
                     }}
                     transition={{
-                      duration: 3 + Math.random() * 2,
+                      duration: star.duration,
                       repeat: Infinity,
-                      delay: Math.random() * 5,
+                      delay: star.delay,
                     }}
                   />
                 ))}
 
                 {/* Mid Stars (Twinkling) */}
-                {[...Array(40)].map((_, i) => (
+                {/* Mid Stars (Twinkling) */}
+                {starField.mid.map((star) => (
                   <motion.div
-                    key={`star-mid-${i}`}
+                    key={star.key}
                     className="absolute w-[1.5px] h-[1.5px] bg-cyan-200/60 rounded-full"
                     style={{
-                      top: `${Math.random() * 100}%`,
-                      left: `${Math.random() * 100}%`,
+                      top: star.top,
+                      left: star.left,
                     }}
                     animate={{
                       opacity: [0.2, 1, 0.2],
                       scale: [1, 1.2, 1],
                     }}
                     transition={{
-                      duration: 2 + Math.random() * 2,
+                      duration: star.duration,
                       repeat: Infinity,
-                      delay: Math.random() * 3,
+                      delay: star.delay,
                     }}
                   />
                 ))}
@@ -106,9 +143,10 @@ const Index = () => {
                   style={{ animationDuration: '15s' }} />
 
                 {/* Shooting Stars */}
-                {[...Array(3)].map((_, i) => (
+                {/* Shooting Stars */}
+                {starField.shooting.map((star) => (
                   <motion.div
-                    key={`shooting-star-${i}`}
+                    key={star.key}
                     className="absolute w-[150px] h-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent -rotate-45 opacity-0"
                     animate={{
                       x: ['-100%', '300%'],
@@ -118,25 +156,26 @@ const Index = () => {
                     transition={{
                       duration: 1.5,
                       repeat: Infinity,
-                      repeatDelay: 5 + Math.random() * 15,
-                      delay: i * 7,
+                      repeatDelay: star.repeatDelay,
+                      delay: star.delay,
                       ease: "easeIn",
                     }}
                     style={{
-                      top: `${Math.random() * 50}%`,
-                      left: `${Math.random() * 50}%`,
+                      top: star.top,
+                      left: star.left,
                     }}
                   />
                 ))}
 
                 {/* Floating Cosmic Dust */}
-                {[...Array(10)].map((_, i) => (
+                {/* Floating Cosmic Dust */}
+                {starField.dust.map((star) => (
                   <motion.div
-                    key={`dust-${i}`}
+                    key={star.key}
                     className="absolute w-[2px] h-[2px] bg-white/10 rounded-full blur-[1px]"
                     style={{
-                      top: `${Math.random() * 100}%`,
-                      left: `${Math.random() * 100}%`,
+                      top: star.top,
+                      left: star.left,
                     }}
                     animate={{
                       y: [0, -100, 0],
@@ -144,7 +183,7 @@ const Index = () => {
                       opacity: [0.1, 0.3, 0.1],
                     }}
                     transition={{
-                      duration: 20 + Math.random() * 20,
+                      duration: star.duration,
                       repeat: Infinity,
                       ease: "linear",
                     }}

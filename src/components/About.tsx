@@ -83,7 +83,7 @@ const About = () => {
                 }}
                 className="text-lg text-muted-foreground leading-relaxed mb-6"
               >
-                Hello my name is Mony i am 20 years old.I come from Kampong Thom Province.But now i'm living  in Phnom Penh to continue my education .I am a student at Royal University of Phnom Penh (RUPP), Studying Computer Science.I am a Frontend Developer with a strong foundation in React.js and a passion for creating engaging and user-friendly interfaces.But now i don't have work experience.
+                Hello my name is Mony i am 20 years old.I come from Kampong Thom Province.But now i'm living  in Phnom Penh to continue my education .I am a student at Royal University of Phnom Penh (RUPP), Studying Computer Science.I am a Frontend Developer with a strong foundation in React.js and a passion for creating engaging and user-friendly interfaces.
               </motion.p>
 
               <motion.div
