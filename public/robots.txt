@@ -1,0 +1,14 @@
+# robots.txt for Mony Phy Portfolio
+# https://monyphy.vercel.app/
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://monyphy.vercel.app/sitemap.xml
+
+# Disallow specific files/folders if needed
+Disallow: /node_modules/
+Disallow: /src/
+Disallow: /.git/
+Disallow: /.env
