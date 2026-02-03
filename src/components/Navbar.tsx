@@ -36,7 +36,7 @@ const Navbar = ({ isLight, setIsLight }: NavbarProps) => {
           {/* Animated Cartoon Character */}
 
 
-          {Array.from("Mony Phy | Portfolio").map((char, index) => (
+          {Array.from("MONY PHY").map((char, index) => (
             <motion.span
               key={index}
               animate={{
