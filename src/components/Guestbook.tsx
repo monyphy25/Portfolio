@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, User, MessageSquare } from "lucide-react";
 import { supabase } from "../lib/supabase";
@@ -29,6 +29,8 @@ const Guestbook = () => {
     const [message, setMessage] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [tick, setTick] = useState(0);
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const [isHovered, setIsHovered] = useState(false);
 
     // Fetch comments from Supabase
     const fetchComments = async () => {
@@ -55,6 +57,27 @@ const Guestbook = () => {
 
         return () => clearInterval(timer);
     }, []);
+
+    // Auto-scroll logic
+    useEffect(() => {
+        const scrollContainer = scrollRef.current;
+        if (!scrollContainer) return;
+
+        const scroll = () => {
+            if (!isHovered && scrollContainer) {
+                const halfHeight = scrollContainer.scrollHeight / 2;
+                // Seamless loop: if we've scrolled past the first set of comments, reset
+                if (scrollContainer.scrollTop >= halfHeight) {
+                    scrollContainer.scrollTop -= halfHeight;
+                }
+                scrollContainer.scrollTop += 1; // Adjust speed as needed
+            }
+        };
+
+        const intervalId = setInterval(scroll, 20);
+
+        return () => clearInterval(intervalId);
+    }, [isHovered, comments]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -184,41 +207,50 @@ const Guestbook = () => {
                     </motion.div>
 
                     {/* Comments List - Infinite Vertical Scroll (bottom to top) */}
-                    <div className="relative h-[350px] sm:h-[450px] md:h-[500px] overflow-hidden mask-gradient-y">
+                    {/* Comments List - Infinite Vertical Scroll (bottom to top) */}
+                    <div className="relative h-[350px] sm:h-[450px] md:h-[500px] mask-gradient-y">
                         {/* Gradient Masks for smooth fade in/out */}
-                        <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none transition-colors" />
-                        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none transition-colors" />
+                        <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-background to-transparent z-20 pointer-events-none transition-colors" />
+                        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-background to-transparent z-20 pointer-events-none transition-colors" />
 
-                        <div className="animate-marquee-vertical space-y-4">
-                            {/* Duplicate comments for seamless loop */}
-                            {(comments.length > 0 ? [...comments, ...comments] : []).map((comment, index) => (
-                                <div
-                                    key={`${comment.id}-${index}`}
-                                    className={`relative border rounded-2xl p-6 backdrop-blur-md flex gap-4 transition-all ${comment.date === "Just now" ? "bg-cyan-500/10 border-cyan-500/50 shadow-[0_0_20px_rgba(6,182,212,0.15)] animate-fade-in-up" : "bg-card border-white/5 shadow-sm"}`}
-                                >
-                                    {(comment.timestamp ? timeAgo(comment.timestamp) : comment.date) === "Just now" && (
-                                        <span className="absolute -top-2 -right-2 bg-cyan-500 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-lg">
-                                            NEW
-                                        </span>
-                                    )}
-                                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center">
-                                        <User className="w-5 h-5 text-white" />
-                                    </div>
-                                    <div>
-                                        <div className="flex items-center gap-2 mb-1">
-                                            <h4 className="font-bold text-foreground">{comment.name}</h4>
-                                            <span className="text-xs text-muted-foreground">• {comment.timestamp ? timeAgo(comment.timestamp) : comment.date}</span>
+                        <div
+                            ref={scrollRef}
+                            className="h-full overflow-hidden hover:overflow-y-auto no-scrollbar"
+                            onMouseEnter={() => setIsHovered(true)}
+                            onMouseLeave={() => setIsHovered(false)}
+                            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }} // Ensure hidden scrollbar for clean look if desired, or remove for visible
+                        >
+                            <div className="space-y-4 py-4">
+                                {/* Duplicate comments for seamless loop */}
+                                {(comments.length > 0 ? [...comments, ...comments] : []).map((comment, index) => (
+                                    <div
+                                        key={`${comment.id}-${index}`}
+                                        className={`relative border rounded-2xl p-6 backdrop-blur-md flex gap-4 transition-all ${comment.date === "Just now" ? "bg-cyan-500/10 border-cyan-500/50 shadow-[0_0_20px_rgba(6,182,212,0.15)] animate-fade-in-up" : "bg-card border-white/5 shadow-sm"}`}
+                                    >
+                                        {(comment.timestamp ? timeAgo(comment.timestamp) : comment.date) === "Just now" && (
+                                            <span className="absolute -top-2 -right-2 bg-cyan-500 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-lg">
+                                                NEW
+                                            </span>
+                                        )}
+                                        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center">
+                                            <User className="w-5 h-5 text-white" />
                                         </div>
-                                        <p className="text-foreground/80 text-sm leading-relaxed">{comment.message}</p>
+                                        <div>
+                                            <div className="flex items-center gap-2 mb-1">
+                                                <h4 className="font-bold text-foreground">{comment.name}</h4>
+                                                <span className="text-xs text-muted-foreground">• {comment.timestamp ? timeAgo(comment.timestamp) : comment.date}</span>
+                                            </div>
+                                            <p className="text-foreground/80 text-sm leading-relaxed">{comment.message}</p>
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))}
 
-                            {comments.length === 0 && (
-                                <div className="text-center text-muted-foreground py-10">
-                                    No comments yet. Be the first to sign!
-                                </div>
-                            )}
+                                {comments.length === 0 && (
+                                    <div className="text-center text-muted-foreground py-10">
+                                        No comments yet. Be the first to sign!
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
